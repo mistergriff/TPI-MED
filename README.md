@@ -49,7 +49,7 @@ Ce projet est publié sous la [Apache License 2.0](LICENSE) à des fins de **tra
 
 ## 🤝 Contact
 
-Pour toute question, suggestion ou signalement, merci de contacter [Renaud Grégory](gregory.renaud@eduvaud.ch)
+Pour toute question, suggestion ou signalement, merci de contacter [Renaud Grégory](mailto:gregory.renaud@eduvaud.ch)
 
 ---
 
