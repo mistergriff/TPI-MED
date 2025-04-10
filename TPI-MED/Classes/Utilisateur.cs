@@ -10,4 +10,6 @@ public class Utilisateur
     public DateTime DateCreation { get; set; }
     public string TokenValidation { get; set; } // Token pour la validation de l'email
     public bool EstValide { get; set; } = false; // Par défaut, l'utilisateur n'est pas validé
+    public string Code2FA { get; set; }
+    public DateTime? Code2FA_Date { get; set; }
 }
