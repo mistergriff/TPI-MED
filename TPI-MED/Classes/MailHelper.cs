@@ -6,6 +6,11 @@ using TPI_MED;
 
 public static class MailHelper
 {
+
+    static string smtpHost = Program.Configuration["Smtp:Host"];
+    static string smtpUser = Program.Configuration["Smtp:User"];
+    static string smtpPass = Program.Configuration["Smtp:Password"];
+
     public static void EnvoyerMailValidation(string emailDestinataire, string token, string nom)
     {
         var lien = "https://dev.mediateur.mycpnv.ch/?token=" + token;
@@ -39,17 +44,11 @@ public static class MailHelper
   </body>
 </html>
 ";
-
-        string smtpHost = Program.Configuration["Smtp:Host"];
-        string smtpUser = Program.Configuration["Smtp:User"];
-        string smtpPass = Program.Configuration["Smtp:Password"];
-
-
-        mail.From = new MailAddress(smtpUser, "Validation de compte");
-
         var smtp = new SmtpClient(smtpHost, 587);
         smtp.Credentials = new NetworkCredential(smtpUser, smtpPass);
         smtp.EnableSsl = true;
+
+        mail.From = new MailAddress(smtpUser, "Validation de compte");
 
         try
         {
@@ -59,5 +58,31 @@ public static class MailHelper
         {
             MessageBox.Show("Erreur lors de l'envoi du mail : " + ex.Message);
         }
+    }
+
+    public static void EnvoyerCode2FA(string email, string code)
+    {
+        MailMessage mail = new MailMessage();
+        mail.To.Add(email);
+        mail.Subject = "Votre code de vérification (2FA)";
+        mail.From = new MailAddress(smtpUser, "Journal de médiation");
+        mail.IsBodyHtml = true;
+
+        mail.Body = $@"
+    <html>
+      <body style='font-family:Segoe UI;'>
+        <p>Bonjour,</p>
+        <p>Voici votre code de validation :</p>
+        <h2 style='color:#007ACC;'>{code}</h2>
+        <p>Ce code est valable pendant 15 minutes.</p>
+        <p>Si vous n’êtes pas à l’origine de cette tentative de connexion, changez immédiatement votre mot de passe.</p>
+      </body>
+    </html>";
+
+        var smtp = new SmtpClient(smtpHost, 587);
+        smtp.Credentials = new NetworkCredential(smtpUser, smtpPass);
+        smtp.EnableSsl = true;
+
+        smtp.Send(mail);
     }
 }
