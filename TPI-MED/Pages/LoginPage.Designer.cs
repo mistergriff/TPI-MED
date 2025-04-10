@@ -4,7 +4,9 @@ using Wisej.Web;
 
 partial class LoginPage
 {
+    private PictureBox logo;
     private Panel panelForm;
+    private Label lblTitre;
     private Label lblIdentifiant;
     private Label lblMotDePasse;
     private TextBox txtIdentifiant;
@@ -14,41 +16,102 @@ partial class LoginPage
 
     private void InitializeComponent()
     {
-        // Panel centré
+        // Panel contenant le formulaire
         this.panelForm = new Panel()
         {
-            Width = 320,
-            Height = 200,
+            Size = new System.Drawing.Size(400, 480),
             Anchor = AnchorStyles.None,
-            BackColor = System.Drawing.Color.LightGray,
-            Location = new System.Drawing.Point((this.Width - 320) / 2, (this.Height - 200) / 2)
+            BackColor = System.Drawing.Color.WhiteSmoke,
+            BorderStyle = BorderStyle.Solid,
+            Location = new System.Drawing.Point((this.Width - 400) / 2, (this.Height - 480) / 2)
         };
 
-        // Labels et champs
-        this.lblIdentifiant = new Label() { Text = "Nom ou email :", Location = new System.Drawing.Point(20, 20) };
-        this.txtIdentifiant = new TextBox() { Location = new System.Drawing.Point(150, 20), Width = 140 };
+        // Logo
+        this.logo = new PictureBox()
+        {
+            ImageSource = "./src/img/LogoFull.png",
+            BackColor = System.Drawing.Color.WhiteSmoke,
+            Size = new System.Drawing.Size(200, 200),
+            Location = new System.Drawing.Point((panelForm.Width - 200) / 2, 10),
+            SizeMode = PictureBoxSizeMode.Zoom
+        };
 
-        this.lblMotDePasse = new Label() { Text = "Mot de passe :", Location = new System.Drawing.Point(20, 60) };
-        this.txtMotDePasse = new TextBox() { Location = new System.Drawing.Point(150, 60), Width = 140, PasswordChar = '*' };
+        // Titre
+        this.lblTitre = new Label()
+        {
+            Text = "Connexion",
+            Font = new System.Drawing.Font("Segoe UI", 16, System.Drawing.FontStyle.Bold),
+            AutoSize = true,
+            Location = new System.Drawing.Point(140, 220)
+        };
 
-        // Boutons
-        this.btnConnexion = new Button() { Text = "Se connecter", Location = new System.Drawing.Point(150, 100) };
-        this.btnConnexion.Click += new EventHandler(this.btnConnexion_Click);
+        // Identifiant
+        this.lblIdentifiant = new Label()
+        {
+            Text = "Nom ou email :",
+            Location = new System.Drawing.Point(30, 270),
+            AutoSize = true
+        };
 
-        this.btnCreerCompte = new Button() { Text = "Créer un compte", Location = new System.Drawing.Point(150, 140) };
-        this.btnCreerCompte.Click += new EventHandler(this.btnCreerCompte_Click);
+        this.txtIdentifiant = new TextBox()
+        {
+            Location = new System.Drawing.Point(160, 270),
+            Width = 200
+        };
+
+        // Mot de passe
+        this.lblMotDePasse = new Label()
+        {
+            Text = "Mot de passe :",
+            Location = new System.Drawing.Point(30, 310),
+            AutoSize = true
+        };
+
+        this.txtMotDePasse = new TextBox()
+        {
+            Location = new System.Drawing.Point(160, 310),
+            Width = 200,
+            PasswordChar = '*'
+        };
+
+        // Bouton Connexion
+        this.btnConnexion = new Button()
+        {
+            Text = "Se connecter",
+            Location = new System.Drawing.Point(160, 360),
+            Size = new System.Drawing.Size(200, 35),
+            BackColor = System.Drawing.Color.FromArgb(0, 122, 204),
+            ForeColor = System.Drawing.Color.White,
+            Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold)
+        };
+        this.btnConnexion.Click += new System.EventHandler(this.btnConnexion_Click);
+
+        // Bouton Créer un compte
+        this.btnCreerCompte = new Button()
+        {
+            Text = "Créer un compte",
+            Location = new System.Drawing.Point(160, 410),
+            Size = new System.Drawing.Size(200, 35),
+            BackColor = System.Drawing.Color.Gainsboro,
+            ForeColor = System.Drawing.Color.Black,
+            Font = new System.Drawing.Font("Segoe UI", 9, System.Drawing.FontStyle.Regular)
+        };
+        this.btnCreerCompte.Click += new System.EventHandler(this.btnCreerCompte_Click);
 
         // Ajout au panel
-        this.panelForm.Controls.AddRange(new Control[]
-        {
-                lblIdentifiant, txtIdentifiant,
-                lblMotDePasse, txtMotDePasse,
-                btnConnexion, btnCreerCompte
-        });
+        this.panelForm.Controls.Add(this.logo);
+        this.panelForm.Controls.Add(this.lblTitre);
+        this.panelForm.Controls.Add(this.lblIdentifiant);
+        this.panelForm.Controls.Add(this.txtIdentifiant);
+        this.panelForm.Controls.Add(this.lblMotDePasse);
+        this.panelForm.Controls.Add(this.txtMotDePasse);
+        this.panelForm.Controls.Add(this.btnConnexion);
+        this.panelForm.Controls.Add(this.btnCreerCompte);
 
         // Ajout à la page
         this.Controls.Add(this.panelForm);
 
+        // Propriétés générales de la page
         this.Text = "Connexion";
         this.Size = new System.Drawing.Size(800, 500);
     }
