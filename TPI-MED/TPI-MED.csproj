@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src\img\" />
     <Folder Include="Themes\" />
   </ItemGroup>
 
@@ -47,6 +46,13 @@
   <ItemGroup>
     <None Remove="Default.html" />
     <None Remove="favicon.ico" />
+    <None Remove="src\img\accueil.png" />
+    <None Remove="src\img\calendar.png" />
+    <None Remove="src\img\cross.png" />
+    <None Remove="src\img\Logo.png" />
+    <None Remove="src\img\LogoFull.png" />
+    <None Remove="src\img\logout.png" />
+    <None Remove="src\img\menu-burger.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +61,27 @@
     </Content>
     <Content Include="favicon.ico">
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <Content Include="src\img\accueil.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\img\calendar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\img\cross.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\img\Logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\img\LogoFull.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\img\logout.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\img\menu-burger.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
