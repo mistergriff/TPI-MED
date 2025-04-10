@@ -18,7 +18,7 @@ using Wisej.Web;
 
             if (utilisateur == null)
             {
-                MessageBox.Show("Utilisateur introuvable.");
+                MessageBox.Show("Utilisateur ou mot de passe incorrect.");
                 return;
             }
 
@@ -31,12 +31,12 @@ using Wisej.Web;
             string hash = PasswordHelper.HashPassword(motDePasse, utilisateur.Sel);
             if (hash == utilisateur.MotDePasse)
             {
-                MessageBox.Show("Connexion réussie !");
+                AlertBox.Show("Connexion réussie !", icon: MessageBoxIcon.Information);
                 Application.MainPage = new HomePage();
             }
             else
             {
-                MessageBox.Show("Mot de passe incorrect.");
+                MessageBox.Show("Utilisateur ou mot de passe incorrect.");
             }
         }
 

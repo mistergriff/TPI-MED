@@ -34,6 +34,9 @@ public partial class ValidationPage : Page
     {
         _delayTimer.Stop();
         _delayTimer.Dispose();
-        lblMessage.Text = "Votre compte a été validé avec succès ! Vous pouvez maintenant vous connecter.";
+
+        lblMessage.Text = "Votre compte a bien été validé.\n Veuillez fermer cette page";
+        lblMessage.ForeColor = System.Drawing.Color.SeaGreen;
+        lblMessage.Font = new System.Drawing.Font("Segoe UI", 12, System.Drawing.FontStyle.Bold);
     }
 }

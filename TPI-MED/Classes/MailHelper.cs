@@ -21,7 +21,7 @@ public static class MailHelper
   <body style='font-family:Segoe UI, sans-serif; background-color:#f6f8fa; padding:20px;'>
     <div style='max-width:600px; margin:auto; background-color:white; padding:30px; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.05);'>
 
-      <h2 style='color:#007ACC;'>Bienvenue sur l'application Journal de médiation 👋</h2>
+      <h2 style='color:#007ACC;'>Bienvenue {nom} sur l'application Journal de médiation 👋</h2>
       <p>Merci pour votre inscription.</p>
       <p>Pour finaliser la création de votre compte, veuillez cliquer sur le bouton ci-dessous :</p>
 

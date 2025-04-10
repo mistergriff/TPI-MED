@@ -45,12 +45,12 @@ using Wisej.Web;
             UtilisateurDAO dao = new UtilisateurDAO();
             if (dao.CreerUtilisateur(utilisateur))
             {
-                MessageBox.Show("Inscription réussie valider l'adresse mail !");
+                MessageBox.Show("Inscription réussie,\nveuillez valider votre adresse mail !");
                 Application.MainPage = new LoginPage();
             }
             else
             {
-                MessageBox.Show("Erreur : cet utilisateur existe déjà.");
+                MessageBox.Show("Erreur : cet utilisateur existe déjà.", icon: MessageBoxIcon.Error);
             }
         }
 
