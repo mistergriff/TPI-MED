@@ -55,14 +55,21 @@ partial class RegisterPage
         // Champ email
         this.lblEmail = new Label() { Text = "Email :", Location = new System.Drawing.Point(30, 300) };
         this.txtEmail = new TextBox() { Location = new System.Drawing.Point(190, 300), Width = 200 };
+        ToolTip toolTipEmail = new ToolTip();
+        toolTipEmail.SetToolTip(txtEmail, "Entrez une adresse email valide pour recevoir un lien de validation.\neduvaud.ch | edu-vaud.ch");
 
         // Champ mot de passe
         this.lblMotDePasse = new Label() { Text = "Mot de passe :", Location = new System.Drawing.Point(30, 340) };
         this.txtMotDePasse = new TextBox() { Location = new System.Drawing.Point(190, 340), Width = 200, PasswordChar = '*' };
+        ToolTip toolTipPw = new ToolTip();
+        toolTipPw.SetToolTip(txtMotDePasse, "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un chiffre.");
+
 
         // Champ confirmation
         this.lblConfirmation = new Label() { Text = "Confirmer mot de passe :", Location = new System.Drawing.Point(30, 380) };
         this.txtConfirmation = new TextBox() { Location = new System.Drawing.Point(190, 380), Width = 200, PasswordChar = '*' };
+        ToolTip toolTipConf = new ToolTip();
+        toolTipConf.SetToolTip(txtConfirmation, "Répétez le mot de passe");
 
         // Bouton inscription
         this.btnInscription = new Button()

@@ -35,7 +35,7 @@ public partial class Code2FAPage : Page
             dao.InvaliderCode2FA(_utilisateurId);
 
             // Redirection après un délai
-            Timer delay = new Timer() { Interval = 1500 };
+            Timer delay = new Timer() { Interval = 1000 };
             delay.Tick += (s, args) =>
             {
                 delay.Stop();
