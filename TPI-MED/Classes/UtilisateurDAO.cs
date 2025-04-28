@@ -2,8 +2,16 @@
 using System;
 using System.Diagnostics;
 
+/// <summary>
+/// Fournit des méthodes pour gérer les utilisateurs dans la base de données.
+/// </summary>
 public class UtilisateurDAO
 {
+    /// <summary>
+    /// Crée un nouvel utilisateur dans la base de données.
+    /// </summary>
+    /// <param name="user">L'utilisateur à créer.</param>
+    /// <returns>Retourne <c>true</c> si l'utilisateur a été créé avec succès, sinon <c>false</c>.</returns>
     public bool CreerUtilisateur(Utilisateur user)
     {
         using (var conn = Database.GetConnection())
@@ -36,6 +44,11 @@ public class UtilisateurDAO
         }
     }
 
+    /// <summary>
+    /// Récupère un utilisateur par son nom ou son adresse e-mail.
+    /// </summary>
+    /// <param name="identifiant">Le nom ou l'adresse e-mail de l'utilisateur.</param>
+    /// <returns>Retourne l'utilisateur correspondant ou <c>null</c> s'il n'existe pas.</returns>
     public Utilisateur GetByNomOuEmail(string identifiant)
     {
         using (var conn = Database.GetConnection())
@@ -66,6 +79,11 @@ public class UtilisateurDAO
         return null;
     }
 
+    /// <summary>
+    /// Récupère un utilisateur par son identifiant unique.
+    /// </summary>
+    /// <param name="id">L'identifiant unique de l'utilisateur.</param>
+    /// <returns>Retourne l'utilisateur correspondant ou <c>null</c> s'il n'existe pas.</returns>
     public Utilisateur GetById(int id)
     {
         using (var conn = Database.GetConnection())
@@ -100,7 +118,11 @@ public class UtilisateurDAO
         return null;
     }
 
-
+    /// <summary>
+    /// Valide un utilisateur en utilisant son token de validation.
+    /// </summary>
+    /// <param name="token">Le token de validation de l'utilisateur.</param>
+    /// <returns>Retourne <c>true</c> si l'utilisateur a été validé avec succès, sinon <c>false</c>.</returns>
     public bool ValiderUtilisateurParToken(string token)
     {
         using (var conn = Database.GetConnection())
@@ -127,6 +149,12 @@ public class UtilisateurDAO
         }
     }
 
+    /// <summary>
+    /// Enregistre un code de validation à deux facteurs (2FA) pour un utilisateur.
+    /// </summary>
+    /// <param name="utilisateurId">L'identifiant de l'utilisateur.</param>
+    /// <param name="code">Le code 2FA à enregistrer.</param>
+    /// <param name="date">La date de génération du code 2FA.</param>
     public void EnregistrerCode2FA(int utilisateurId, string code, DateTime date)
     {
         using (var conn = Database.GetConnection())
@@ -143,6 +171,10 @@ public class UtilisateurDAO
         }
     }
 
+    /// <summary>
+    /// Invalide le code de validation à deux facteurs (2FA) pour un utilisateur.
+    /// </summary>
+    /// <param name="utilisateurId">L'identifiant de l'utilisateur.</param>
     public void InvaliderCode2FA(int utilisateurId)
     {
         using (var conn = Database.GetConnection())
@@ -156,6 +188,4 @@ public class UtilisateurDAO
             }
         }
     }
-
-
 }

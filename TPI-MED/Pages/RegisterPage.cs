@@ -2,13 +2,25 @@
 using System.Linq;
 using Wisej.Web;
 
+/// <summary>
+/// Représente la page d'inscription de l'application.
+/// </summary>
 public partial class RegisterPage : Page
 {
+    /// <summary>
+    /// Initialise une nouvelle instance de la classe <see cref="RegisterPage"/>.
+    /// </summary>
     public RegisterPage()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Gère l'événement de clic sur le bouton d'inscription.
+    /// Valide les données saisies par l'utilisateur et crée un nouveau compte si les validations réussissent.
+    /// </summary>
+    /// <param name="sender">L'objet source de l'événement.</param>
+    /// <param name="e">Les données d'événement associées.</param>
     private void btnInscription_Click(object sender, EventArgs e)
     {
         string nom = txtNom.Text;
@@ -44,7 +56,6 @@ public partial class RegisterPage : Page
         string hash = PasswordHelper.HashPassword(motDePasse, salt);
         string token = Guid.NewGuid().ToString(); // token unique
 
-
         Utilisateur utilisateur = new Utilisateur
         {
             Nom = nom,
@@ -67,11 +78,22 @@ public partial class RegisterPage : Page
         }
     }
 
+    /// <summary>
+    /// Gère l'événement de clic sur le bouton de retour.
+    /// Redirige l'utilisateur vers la page de connexion.
+    /// </summary>
+    /// <param name="sender">L'objet source de l'événement.</param>
+    /// <param name="e">Les données d'événement associées.</param>
     private void btnRetour_Click(object sender, EventArgs e)
     {
         Application.MainPage = new LoginPage();
     }
 
+    /// <summary>
+    /// Vérifie si une adresse e-mail est valide.
+    /// </summary>
+    /// <param name="email">L'adresse e-mail à valider.</param>
+    /// <returns>Retourne <c>true</c> si l'adresse e-mail est valide, sinon <c>false</c>.</returns>
     private bool IsValidEmail(string email)
     {
         return System.Text.RegularExpressions.Regex.IsMatch(
@@ -80,6 +102,11 @@ public partial class RegisterPage : Page
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
     }
 
+    /// <summary>
+    /// Vérifie si un mot de passe respecte les critères de sécurité.
+    /// </summary>
+    /// <param name="pw">Le mot de passe à valider.</param>
+    /// <returns>Retourne <c>true</c> si le mot de passe est valide, sinon <c>false</c>.</returns>
     private bool IsPasswordValid(string pw)
     {
         if (pw.Length < 8)
@@ -90,5 +117,4 @@ public partial class RegisterPage : Page
             return false;
         return true;
     }
-
 }

@@ -3,41 +3,51 @@ using Microsoft.Extensions.Configuration;
 
 namespace TPI_MED
 {
-	static class Program
-	{
-
+    /// <summary>
+    /// Classe principale de l'application.
+    /// </summary>
+    static class Program
+    {
+        /// <summary>
+        /// Obtient ou définit la configuration de l'application.
+        /// </summary>
         public static IConfiguration Configuration;
 
         /// <summary>
-        /// The main entry point for the application.
+        /// Point d'entrée principal de l'application.
+        /// Configure la page principale en fonction des paramètres de la requête.
         /// </summary>
         static void Main()
-		{
+        {
+            // Initialise le constructeur de configuration pour charger les fichiers de configuration JSON.
             var builder = new ConfigurationBuilder()
-			.SetBasePath(Application.MapPath("~"))
-			.AddJsonFile("appsettings.json", optional: true)
-			.AddJsonFile("appsettings.Local.json", optional: true); // chargé en dernier
+                .SetBasePath(Application.MapPath("~"))
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddJsonFile("appsettings.Local.json", optional: true); // Chargé en dernier pour écraser les paramètres globaux.
 
+            // Construit la configuration.
             Configuration = builder.Build();
 
+            // Récupère le paramètre "token" de la chaîne de requête.
             string token = Application.QueryString["token"];
 
-			if (!string.IsNullOrEmpty(token))
-			{
-				Application.MainPage = new ValidationPage(token);
-			}
-			else
-			{
-				Application.MainPage = new LoginPage();
-			}
-		}
+            // Définit la page principale de l'application en fonction de la présence du token.
+            if (!string.IsNullOrEmpty(token))
+            {
+                Application.MainPage = new ValidationPage(token);
+            }
+            else
+            {
+                Application.MainPage = new LoginPage();
+            }
+        }
 
-		//
-		// You can use the entry method below
-		// to receive the parameters from the URL in the args collection.
-		//
-		//static void Main(NameValueCollection args)
-		//{
-		//}
-	}
+        // 
+        // Vous pouvez utiliser la méthode d'entrée ci-dessous
+        // pour recevoir les paramètres de l'URL dans la collection args.
+        //
+        // static void Main(NameValueCollection args)
+        // {
+        // }
+    }
 }

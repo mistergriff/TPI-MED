@@ -4,13 +4,32 @@ using System;
 using Wisej.Web;
 using TPI_MED;
 
+/// <summary>
+/// Fournit des méthodes utilitaires pour l'envoi d'e-mails, y compris la validation de compte et les codes 2FA.
+/// </summary>
 public static class MailHelper
 {
-
+    /// <summary>
+    /// Hôte SMTP utilisé pour l'envoi des e-mails.
+    /// </summary>
     static string smtpHost = Program.Configuration["Smtp:Host"];
+
+    /// <summary>
+    /// Nom d'utilisateur SMTP utilisé pour l'authentification.
+    /// </summary>
     static string smtpUser = Program.Configuration["Smtp:User"];
+
+    /// <summary>
+    /// Mot de passe SMTP utilisé pour l'authentification.
+    /// </summary>
     static string smtpPass = Program.Configuration["Smtp:Password"];
 
+    /// <summary>
+    /// Envoie un e-mail de validation de compte à l'utilisateur.
+    /// </summary>
+    /// <param name="emailDestinataire">L'adresse e-mail du destinataire.</param>
+    /// <param name="token">Le token de validation unique.</param>
+    /// <param name="nom">Le nom de l'utilisateur.</param>
     public static void EnvoyerMailValidation(string emailDestinataire, string token, string nom)
     {
         var lien = "https://dev.mediateur.mycpnv.ch/?token=" + token;
@@ -18,7 +37,6 @@ public static class MailHelper
         var mail = new MailMessage();
         mail.To.Add(emailDestinataire);
         mail.Subject = "Validation de votre compte Journal de médiation";
-
         mail.IsBodyHtml = true;
 
         mail.Body = $@"
@@ -60,6 +78,11 @@ public static class MailHelper
         }
     }
 
+    /// <summary>
+    /// Envoie un e-mail contenant un code de validation à deux facteurs (2FA) à l'utilisateur.
+    /// </summary>
+    /// <param name="email">L'adresse e-mail du destinataire.</param>
+    /// <param name="code">Le code 2FA à envoyer.</param>
     public static void EnvoyerCode2FA(string email, string code)
     {
         MailMessage mail = new MailMessage();
