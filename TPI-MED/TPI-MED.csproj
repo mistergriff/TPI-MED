@@ -118,6 +118,35 @@
     <PackageReference Include="Wisej-3-NavigationBar" Version="3.5.17" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Pages\AccueilPage.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Pages\Code2FAPage.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Pages\HomePage.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Pages\LoginPage.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Pages\RegisterPage.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Pages\StatsPage.cs">
+      <SubType>UserControl</SubType>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Pages\DataPage.cs">
+      <SubType>UserControl</SubType>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Pages\ValidationPage.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
 
 
 </Project>
