@@ -38,7 +38,9 @@ public partial class DataPage : UserControl
     private void btnAjouter_Click(object sender, EventArgs e)
     {
         // Afficher une alerte. Plus tard, ouvrir un formulaire
-        AlertBox.Show("Ouverture de la page d'ajout d'entrée...", MessageBoxIcon.Information);
+        //AlertBox.Show("Ouverture de la page d'ajout d'entrée...", MessageBoxIcon.Information);
+        var form = new NewEntryForm();
+        form.ShowDialog();
     }
 
     private void dataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)

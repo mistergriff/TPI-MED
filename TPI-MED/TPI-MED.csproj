@@ -110,7 +110,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Pages\AccueilPage.cs">
+    <Compile Update="UserControl\AccueilPage.cs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Pages\Code2FAPage.cs">
@@ -125,11 +125,11 @@
     <Compile Update="Pages\RegisterPage.cs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
-    <Compile Update="Pages\StatsPage.cs">
+    <Compile Update="UserControl\StatsPage.cs">
       <SubType>UserControl</SubType>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
-    <Compile Update="Pages\DataPage.cs">
+    <Compile Update="UserControl\DataPage.cs">
       <SubType>UserControl</SubType>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
