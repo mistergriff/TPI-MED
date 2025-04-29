@@ -1,38 +1,57 @@
-﻿partial class DataPage
+﻿using System;
+using Wisej.Web;
+
+
+partial class DataPage
 {
-    /// <summary> 
-    /// Required designer variable.
-    /// </summary>
-    private System.ComponentModel.IContainer components = null;
+    private DataGridView dataGrid;
+    private Button btnAjouter;
+    private FlowLayoutPanel panelTop;
 
-    /// <summary> 
-    /// Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing && (components != null))
-        {
-            components.Dispose();
-        }
-        base.Dispose(disposing);
-    }
-
-    private void initializeComponents()
-    {
-
-    }
-    #region Wisej.NET Designer generated code
-
-    /// <summary> 
-    /// Required method for Designer support - do not modify 
-    /// the contents of this method with the code editor.
-    /// </summary>
     private void InitializeComponent()
     {
-        this.AutoScaleMode = Wisej.Web.AutoScaleMode.Font;
+        // Panel pour les boutons
+        this.panelTop = new FlowLayoutPanel()
+        {
+            Dock = DockStyle.Top,
+            Height = 60,
+            Padding = new Padding(10),
+            FlowDirection = FlowDirection.LeftToRight,
+            BackColor = System.Drawing.Color.WhiteSmoke
+        };
+
+        // Bouton Ajouter
+        this.btnAjouter = new Button()
+        {
+            Text = "➕ Ajouter une entrée",
+            Height = 40,
+            Width = 200,
+            BackColor = System.Drawing.Color.FromArgb(0, 122, 204),
+            ForeColor = System.Drawing.Color.White,
+            Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
+            TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        };
+        this.btnAjouter.Click += new EventHandler(this.btnAjouter_Click);
+
+        // DataGrid
+        this.dataGrid = new DataGridView()
+        {
+            Dock = DockStyle.Fill,
+            AllowUserToAddRows = false,
+            AllowUserToDeleteRows = false,
+            ReadOnly = true,
+            AutoGenerateColumns = true,
+            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        };
+
+        // Ajout au panel top
+        this.panelTop.Controls.Add(this.btnAjouter);
+
+        // Ajout aux contrôles de la page
+        this.Controls.Add(this.dataGrid);
+        this.Controls.Add(this.panelTop);
+
+        this.Text = "Entrées";
+        this.Size = new System.Drawing.Size(800, 500);
     }
-
-    #endregion
-
 }
