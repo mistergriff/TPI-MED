@@ -43,14 +43,14 @@ public partial class HomePage : Page
         {
             Text = "Entrées",
             Name = "Entrées",
-            Icon = "./src/img/accueil.png"
+            Icon = "./src/img/data.png"
         };
 
         this.navStats = new NavigationBarItem()
         {
             Text = "Statistiques",
             Name = "Statistiques",
-            Icon = "./src/img/accueil.png"
+            Icon = "./src/img/chart.svg"
         };
 
         this.navDeconnexion = new NavigationBarItem()
