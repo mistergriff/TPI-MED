@@ -8,6 +8,11 @@ using Wisej.Web.Ext.NavigationBar;
 public partial class HomePage : Page
 {
     private Panel pageContainer;
+    private NavigationBar navigationBar;
+    private NavigationBarItem navAccueil;
+    private NavigationBarItem navData;
+    private NavigationBarItem navStats;
+    private NavigationBarItem navDeconnexion;
 
     /// <summary>
     /// Initialise une nouvelle instance de la classe <see cref="HomePage"/>.
@@ -64,6 +69,8 @@ public partial class HomePage : Page
 
         this.navigationBar.ItemClick += NavigationBar_ItemClick;
 
+        this.navigationBar.ShowUser = false;
+
         pageContainer = new Panel()
         {
             Dock = DockStyle.Fill
@@ -87,7 +94,8 @@ public partial class HomePage : Page
     /// <param name="e">Les données d'événement associées.</param>
     private void navAccueil_Click(object sender, EventArgs e)
     {
-        lblContenu.Text = "Bienvenue dans l'application Journal de médiation.";
+        ShowPage(new AccueilPage());
+        this.Text = "Accueil";
     }
 
     private void ShowPage(UserControl page)
