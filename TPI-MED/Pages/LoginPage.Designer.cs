@@ -56,7 +56,8 @@ partial class LoginPage
         this.txtIdentifiant = new TextBox()
         {
             Location = new System.Drawing.Point(160, 270),
-            Width = 200
+            Width = 200,
+            Name = "txtIdentifiant"
         };
 
         // Mot de passe
@@ -71,25 +72,29 @@ partial class LoginPage
         {
             Location = new System.Drawing.Point(160, 310),
             Width = 200,
-            PasswordChar = '*'
+            PasswordChar = '*',
+            Name = "txtMotDePasse"
         };
 
         // Bouton Connexion
         this.btnConnexion = new Button()
         {
             Text = "Se connecter",
+            Name = "btnConnexion",
             Location = new System.Drawing.Point(160, 360),
             Size = new System.Drawing.Size(200, 35),
             BackColor = System.Drawing.Color.FromArgb(0, 122, 204),
             ForeColor = System.Drawing.Color.White,
-            Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold)
+            Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
         };
+        //this.AcceptButton = this.btnConnexion; // Rendre le bouton de connexion le bouton par défaut
         this.btnConnexion.Click += new System.EventHandler(this.btnConnexion_Click);
 
         // Bouton Créer un compte
         this.btnCreerCompte = new Button()
         {
             Text = "Créer un compte",
+            Name = "btnCreeCompte",
             Location = new System.Drawing.Point(160, 410),
             Size = new System.Drawing.Size(200, 35),
             BackColor = System.Drawing.Color.Gainsboro,
@@ -111,8 +116,13 @@ partial class LoginPage
         // Ajout à la page
         this.Controls.Add(this.panelForm);
 
+        this.panelForm.AutoTabIndex();
+
         // Propriétés générales de la page
         this.Text = "Connexion";
         this.Size = new System.Drawing.Size(800, 500);
+
+        MobileTabHelper.ActiverNavigation(this.panelForm, this.btnConnexion);
+
     }
 }

@@ -50,24 +50,24 @@ partial class RegisterPage
 
         // Champ nom
         this.lblNom = new Label() { Text = "Nom d'utilisateur :", Location = new System.Drawing.Point(30, 260) };
-        this.txtNom = new TextBox() { Location = new System.Drawing.Point(190, 260), Width = 200 };
+        this.txtNom = new TextBox() { Location = new System.Drawing.Point(190, 260), Width = 200, Name = "txtNom" };
 
         // Champ email
         this.lblEmail = new Label() { Text = "Email :", Location = new System.Drawing.Point(30, 300) };
-        this.txtEmail = new TextBox() { Location = new System.Drawing.Point(190, 300), Width = 200 };
+        this.txtEmail = new TextBox() { Location = new System.Drawing.Point(190, 300), Width = 200, Name = "txtEmail" };
         ToolTip toolTipEmail = new ToolTip();
         toolTipEmail.SetToolTip(txtEmail, "Entrez une adresse email valide pour recevoir un lien de validation.\neduvaud.ch | edu-vaud.ch");
 
         // Champ mot de passe
         this.lblMotDePasse = new Label() { Text = "Mot de passe :", Location = new System.Drawing.Point(30, 340) };
-        this.txtMotDePasse = new TextBox() { Location = new System.Drawing.Point(190, 340), Width = 200, PasswordChar = '*' };
+        this.txtMotDePasse = new TextBox() { Location = new System.Drawing.Point(190, 340), Width = 200, PasswordChar = '*', Name = "txtMotDePasse" };
         ToolTip toolTipPw = new ToolTip();
         toolTipPw.SetToolTip(txtMotDePasse, "Le mot de passe doit contenir au moins 8 caractères, une majuscule et un chiffre.");
 
 
         // Champ confirmation
         this.lblConfirmation = new Label() { Text = "Confirmer mot de passe :", Location = new System.Drawing.Point(30, 380) };
-        this.txtConfirmation = new TextBox() { Location = new System.Drawing.Point(190, 380), Width = 200, PasswordChar = '*' };
+        this.txtConfirmation = new TextBox() { Location = new System.Drawing.Point(190, 380), Width = 200, PasswordChar = '*', Name = "txtConfirmation" };
         ToolTip toolTipConf = new ToolTip();
         toolTipConf.SetToolTip(txtConfirmation, "Répétez le mot de passe");
 
@@ -75,11 +75,13 @@ partial class RegisterPage
         this.btnInscription = new Button()
         {
             Text = "S'inscrire",
+            Name = "btnInscription",
             Location = new System.Drawing.Point(190, 430),
             Size = new System.Drawing.Size(200, 40),
             BackColor = System.Drawing.Color.FromArgb(0, 122, 204),
             ForeColor = System.Drawing.Color.White,
-            Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold)
+            Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold),
+            TabIndex = 4
         };
         this.btnInscription.Click += new System.EventHandler(this.btnInscription_Click);
 
@@ -87,6 +89,7 @@ partial class RegisterPage
         this.btnRetour = new Button()
         {
             Text = "Retour à la connexion",
+            Name = "btnRetour",
             Location = new System.Drawing.Point(190, 480),
             Size = new System.Drawing.Size(200, 35),
             BackColor = System.Drawing.Color.Gainsboro,
@@ -105,10 +108,14 @@ partial class RegisterPage
                 btnInscription, btnRetour
         });
 
+        this.panelForm.AutoTabIndex();
+
         // Ajout à la page
         this.Controls.Add(this.panelForm);
 
         this.Text = "Inscription";
         this.Size = new System.Drawing.Size(800, 500);
+
+        MobileTabHelper.ActiverNavigation(this.panelForm, this.btnInscription);
     }
 }
