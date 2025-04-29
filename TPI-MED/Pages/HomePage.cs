@@ -13,6 +13,8 @@ public partial class HomePage : Page
     private NavigationBarItem navData;
     private NavigationBarItem navStats;
     private NavigationBarItem navDeconnexion;
+    private NavigationBarItem navFeedback;
+
 
     /// <summary>
     /// Initialise une nouvelle instance de la classe <see cref="HomePage"/>.
@@ -60,10 +62,19 @@ public partial class HomePage : Page
             Icon = "./src/img/logout.png"
         };
 
+        this.navFeedback = new NavigationBarItem()
+        {
+            Text = "Feedback",
+            Name = "Feedback",
+            Icon = "./src/img/bug.png"
+        };
+
+
         this.navigationBar.Items.AddRange(new NavigationBarItem[] {
                 navAccueil,
                 navData,
                 navStats,
+                navFeedback
             });
         this.navigationBar.Items.Add(navDeconnexion);
 
@@ -122,17 +133,30 @@ public partial class HomePage : Page
                 this.Text = "Statistiques";
                 break;
             case "Déconnexion":
-                if (MessageBox.Show("Voulez vous vous déconnecter du compte", buttons: MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Voulez vous vous déconnecter du compte ?", buttons: MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Application.MainPage = new LoginPage();
                     //SessionUtilisateur.NomUtilisateur = null;
-                    AlertBox.Show("Compte déconnecté avec succès.", icon: MessageBoxIcon.Information, autoCloseDelay: 10000, showProgressBar: true, showCloseButton: true);
+                    AlertBox.Show("Compte déconnecté avec succès.", icon: MessageBoxIcon.Question, autoCloseDelay: 10000, showProgressBar: true, showCloseButton: true);
                     break;
                 }
                 else
                 {
                     break;
                 }
+            case "Feedback":
+                if (MessageBox.Show("Voulez vous vous faire un rapport sur l'application ?", buttons: MessageBoxButtons.YesNo, icon:MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    Application.Eval("window.open('https://forms.gle/5ChU1XmSqimF42ik7', '_blank')");
+                    break;
+                }
+                else
+                {
+                    break;
+                }
+            default:
+                MessageBox.Show("Page non trouvée.", icon:MessageBoxIcon.Error);
+                break;
         }
     }
 }

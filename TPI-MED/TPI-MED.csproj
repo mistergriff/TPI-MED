@@ -139,6 +139,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="src\img\bug.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="src\img\chart.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
