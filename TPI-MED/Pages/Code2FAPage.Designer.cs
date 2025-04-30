@@ -60,5 +60,7 @@ partial class Code2FAPage
 
         this.Text = "Vérification 2FA";
         this.Size = new System.Drawing.Size(800, 400);
+
+        MobileTabHelper.ActiverNavigation(this.panelForm, this.btnValider);
     }
 }

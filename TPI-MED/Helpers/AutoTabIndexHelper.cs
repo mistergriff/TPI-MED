@@ -13,7 +13,7 @@ public static class AutoTabIndexHelper
             if (ctrl is TextBox || ctrl is NumericUpDown || ctrl is ComboBox || ctrl is DateTimePicker || ctrl is Button)
             {
                 ctrl.TabIndex = tabIndex++;
-                AlertBox.Show($"[TabIndex Debug] {ctrl.Name} => {ctrl.TabIndex}");
+                //AlertBox.Show($"[TabIndex Debug] {ctrl.Name} => {ctrl.TabIndex}");
             }
 
             // Gestion récursive : si un Panel ou autre container contient des champs

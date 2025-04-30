@@ -116,6 +116,7 @@ partial class LoginPage
         // Ajout à la page
         this.Controls.Add(this.panelForm);
 
+        // Auto Index des champs et boutons
         this.panelForm.AutoTabIndex();
 
         // Propriétés générales de la page
@@ -123,6 +124,5 @@ partial class LoginPage
         this.Size = new System.Drawing.Size(800, 500);
 
         MobileTabHelper.ActiverNavigation(this.panelForm, this.btnConnexion);
-
     }
 }

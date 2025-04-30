@@ -108,6 +108,7 @@ partial class RegisterPage
                 btnInscription, btnRetour
         });
 
+        // Auto Index des champs et boutons
         this.panelForm.AutoTabIndex();
 
         // Ajout à la page

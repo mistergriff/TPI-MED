@@ -63,7 +63,8 @@ public partial class RegisterPage : Page
             MotDePasse = hash,
             Sel = salt,
             TokenValidation = token,
-            EstValide = false
+            EstValide = false,
+            DateCreation = DateTime.Now
         };
 
         UtilisateurDAO dao = new UtilisateurDAO();
