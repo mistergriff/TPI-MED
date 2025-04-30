@@ -38,14 +38,14 @@ public partial class HomePage : Page
         {
             Text = "Accueil",
             Name = "Accueil",
-            Icon = "./src/img/accueil.png"
+            Icon = "./src/img/home.svg"
         };
 
         this.navData = new NavigationBarItem()
         {
             Text = "Entrées",
             Name = "Entrées",
-            Icon = "./src/img/data.png"
+            Icon = "./src/img/data.svg"
         };
 
         this.navStats = new NavigationBarItem()
@@ -59,14 +59,14 @@ public partial class HomePage : Page
         {
             Text = "Déconnexion",
             Name = "Déconnexion",
-            Icon = "./src/img/logout.png"
+            Icon = "./src/img/logout.svg"
         };
 
         this.navFeedback = new NavigationBarItem()
         {
             Text = "Feedback",
             Name = "Feedback",
-            Icon = "./src/img/bug.png"
+            Icon = "./src/img/bug.svg"
         };
 
 
