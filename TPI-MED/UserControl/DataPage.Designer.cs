@@ -23,7 +23,7 @@ partial class DataPage
         // Bouton Ajouter
         this.btnAjouter = new Button()
         {
-            Text = "➕ Ajouter une entrée",
+            Text = "➕   Ajouter une entrée",
             Height = 40,
             Width = 200,
             BackColor = System.Drawing.Color.FromArgb(0, 122, 204),
@@ -41,7 +41,8 @@ partial class DataPage
             AllowUserToDeleteRows = false,
             ReadOnly = true,
             AutoGenerateColumns = true,
-            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+            AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+            ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
         };
 
         // Ajout au panel top
