@@ -14,10 +14,9 @@ public partial class NewEntryForm : Form
         var sujet = txtSujet.Text;
         var personnes = txtPersonnes.Text;
         var duree = (int)numDuree.Value;
-        var type = radioSeance.Checked ? "Séance" : "Entretien";
 
         // TODO: Enregistrer l'entrée dans la base ou la liste de test
-        AlertBox.Show($"Entrée ajoutée :\n{type} - {date:d} - {sujet}", MessageBoxIcon.Information);
+        AlertBox.Show($"Entrée ajoutée :\n - {date:d} - {sujet}", MessageBoxIcon.Information);
 
         this.Close(); // Ferme la fenêtre après ajout
     }
