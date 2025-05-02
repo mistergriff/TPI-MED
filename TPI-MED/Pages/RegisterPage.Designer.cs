@@ -56,7 +56,7 @@ partial class RegisterPage
         this.lblEmail = new Label() { Text = "Email :", Location = new System.Drawing.Point(30, 300) };
         this.txtEmail = new TextBox() { Location = new System.Drawing.Point(190, 300), Width = 200, Name = "txtEmail" };
         ToolTip toolTipEmail = new ToolTip();
-        toolTipEmail.SetToolTip(txtEmail, "Entrez une adresse email valide pour recevoir un lien de validation.\neduvaud.ch | edu-vaud.ch");
+        toolTipEmail.SetToolTip(txtEmail, "Entrez une adresse email valide pour recevoir un lien de validation.\neduvaud.ch | edu-vd.ch");
 
         // Champ mot de passe
         this.lblMotDePasse = new Label() { Text = "Mot de passe :", Location = new System.Drawing.Point(30, 340) };
