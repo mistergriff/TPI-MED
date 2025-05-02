@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Wisej.Web;
+using ZstdSharp.Unsafe;
 
 
 partial class NewEntryForm
@@ -15,6 +17,19 @@ partial class NewEntryForm
     private RadioButton radioSeul;
     private RadioButton radioGroupe;
     private RadioButton radioClasse;
+    private RadioButton selectedRadioButton;
+    private NumericUpDown numDureeEntretien;
+    private Label lblInfoSeance;
+    private TextBox txtDirection;
+    private TextBox txtEnseignant;
+    private TextBox txtEquipePSPS;
+    private TextBox txtProjets;
+    private TextBox txtGroupeMPP;
+    private TextBox txtReseauAvecParents;
+    private TextBox txtEquipePluriReseau;
+    private TextBox txtAutre;
+    private Label lblWarning;
+    private TableLayoutPanel table;
     private Button btnAjouter;
 
     private void InitializeComponent()
@@ -70,7 +85,7 @@ partial class NewEntryForm
 
         // Onglet Séance
 
-        var lblInfoSeance = new Label()
+        this.lblInfoSeance = new Label()
         {
             Text = "Insérez le temps dans chaques champs correspondant (en minutes)",
             Location = new System.Drawing.Point(20, 20),
@@ -78,7 +93,7 @@ partial class NewEntryForm
         };
         this.tabSeance.Controls.Add(lblInfoSeance);
 
-        var txtDirection = new TextBox()
+        this.txtDirection = new TextBox()
         {
             Location = new System.Drawing.Point(20, 50),
             LabelText = "Direction",
@@ -86,7 +101,7 @@ partial class NewEntryForm
         };
         this.tabSeance.Controls.Add(txtDirection);
 
-        var txtEnseignant = new TextBox()
+        this.txtEnseignant = new TextBox()
         {
             Location = new System.Drawing.Point(20, 110),
             LabelText = "Enseignant-e-s",
@@ -94,7 +109,7 @@ partial class NewEntryForm
         };
         this.tabSeance.Controls.Add(txtEnseignant);
 
-        var txtEquipePSPS = new TextBox()
+        this.txtEquipePSPS = new TextBox()
         {
             Location = new System.Drawing.Point(20, 170),
             LabelText = "Equipe PSPS",
@@ -102,7 +117,7 @@ partial class NewEntryForm
         };
         this.tabSeance.Controls.Add(txtEquipePSPS);
 
-        var txtProjets = new TextBox()
+        this.txtProjets = new TextBox()
         {
             Location = new System.Drawing.Point(20, 230),
             LabelText = "Projets",
@@ -110,7 +125,7 @@ partial class NewEntryForm
         };
         this.tabSeance.Controls.Add(txtProjets);
 
-        var txtGroupeMPP = new TextBox()
+        this.txtGroupeMPP = new TextBox()
         {
             Location = new System.Drawing.Point(190, 50),
             LabelText = "Groupe MPP",
@@ -118,7 +133,7 @@ partial class NewEntryForm
         };
         this.tabSeance.Controls.Add(txtGroupeMPP);
 
-        var txtReseauAvecParents = new TextBox()
+        this.txtReseauAvecParents = new TextBox()
         {
             Location = new System.Drawing.Point(190, 110),
             LabelText = "Réseau avec parents",
@@ -126,7 +141,7 @@ partial class NewEntryForm
         };
         this.tabSeance.Controls.Add(txtReseauAvecParents);
 
-        var txtEquipePluriReseau = new TextBox()
+        this.txtEquipePluriReseau = new TextBox()
         {
             Location = new System.Drawing.Point(190, 170),
             LabelText = "Equipe pluri-réseau",
@@ -134,7 +149,7 @@ partial class NewEntryForm
         };
         this.tabSeance.Controls.Add(txtEquipePluriReseau);
 
-        var txtAutre = new TextBox()
+        this.txtAutre = new TextBox()
         {
             Location = new System.Drawing.Point(190, 230),
             LabelText = "Autre",
@@ -142,7 +157,7 @@ partial class NewEntryForm
         };
         this.tabSeance.Controls.Add(txtAutre);
 
-        var lblWarning = new Label()
+        this.lblWarning = new Label()
         {
             Location = new System.Drawing.Point(20, 300),
             Text = "Au moin un des champs ci-dessus doit être rempli",
@@ -156,7 +171,11 @@ partial class NewEntryForm
         this.radioSeul = new RadioButton() { Text = "Seul", Location = new Point(20, 20), Checked = true };
         this.radioGroupe = new RadioButton() { Text = "Groupe", Location = new Point(100, 20) };
         this.radioClasse = new RadioButton() { Text = "Classe", Location = new Point(200, 20) };
-        NumericUpDown numDureeEntretien = new NumericUpDown()
+        this.radioSeul.CheckedChanged += (s, e) => { selectedRadioButton = radioSeul; };
+        this.radioGroupe.CheckedChanged += (s, e) => { selectedRadioButton = radioGroupe; };
+        this.radioClasse.CheckedChanged += (s, e) => { selectedRadioButton = radioClasse; };
+
+        numDureeEntretien = new NumericUpDown()
         {
             Name = "numDureeEntretien",
             Location = new Point(300, 20),
@@ -168,7 +187,7 @@ partial class NewEntryForm
 
         tabEntretien.Controls.AddRange(new Control[] { radioSeul, radioGroupe, radioClasse, numDureeEntretien });
 
-        var table = new TableLayoutPanel()
+        this.table = new TableLayoutPanel()
         {
             Location = new Point(10, 60),
             Size = new Size(410, 280),
@@ -188,7 +207,7 @@ partial class NewEntryForm
 {
     "Conduites addictives", "Incident critique", "Conflit entre élèves",
     "Incivilités / Violences", "Deuil", "Mal-hêtre", "Difficultés Apprentissage",
-    "Question orientation\nprofessionnelle", "Difficultés familiales", "Stress", "Difficultés financières",
+    "Question orientation professionnelle", "Difficultés familiales", "Stress", "Difficultés financières",
     "Suspicion maltraitance", "Discrimination", "Difficutés / tensions avec un∙e enseignant∙e enseignant∙e",
     "Harcèlement / Intimidation", "Genre - orientation sexuelle et affective", "Autre"
 };
@@ -203,6 +222,7 @@ partial class NewEntryForm
             var cb1 = new CheckBox()
             {
                 Text = interventions[i],
+                Name = interventions[i],
                 Dock = DockStyle.Left,
                 AutoSize = true,
                 Width = 200
@@ -247,4 +267,25 @@ partial class NewEntryForm
         this.Size = new System.Drawing.Size(470, 710);
         this.StartPosition = FormStartPosition.CenterParent;
     }
+
+    public List<string> GetCheckedInterventionKeys(Control container)
+    {
+        var checkedItems = new List<string>();
+
+        foreach (Control ctrl in container.Controls)
+        {
+            if (ctrl is CheckBox cb && cb.Checked)
+            {
+                checkedItems.Add(cb.Name);
+            }
+
+            if (ctrl.HasChildren)
+            {
+                checkedItems.AddRange(GetCheckedInterventionKeys(ctrl));
+            }
+        }
+
+        return checkedItems;
+    }
+
 }
