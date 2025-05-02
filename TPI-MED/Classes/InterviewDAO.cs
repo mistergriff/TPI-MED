@@ -24,27 +24,69 @@ public class InterviewDAO
             {
                 cmd.Parameters.AddWithValue("@time", itv.Time);
                 cmd.Parameters.AddWithValue("@type", itv.InterviewTypeId);
-                cmd.Parameters.AddWithValue("@ab", itv.AddictiveBehaviors);
-                cmd.Parameters.AddWithValue("@ic", itv.CriticalIncident);
-                cmd.Parameters.AddWithValue("@sc", itv.StudentConflict);
-                cmd.Parameters.AddWithValue("@iv", itv.IncivilityViolence);
-                cmd.Parameters.AddWithValue("@gr", itv.Grief);
-                cmd.Parameters.AddWithValue("@uh", itv.Unhappiness);
-                cmd.Parameters.AddWithValue("@ld", itv.LearningDifficulties);
-                cmd.Parameters.AddWithValue("@cg", itv.CareerGuidanceIssues);
-                cmd.Parameters.AddWithValue("@fd", itv.FamilyDifficulties);
-                cmd.Parameters.AddWithValue("@st", itv.Stress);
-                cmd.Parameters.AddWithValue("@fdif", itv.FinancialDifficulties);
-                cmd.Parameters.AddWithValue("@sa", itv.SuspectedAbuse);
-                cmd.Parameters.AddWithValue("@dis", itv.Discrimination);
-                cmd.Parameters.AddWithValue("@dt", itv.TensionsWithTeacher);
-                cmd.Parameters.AddWithValue("@har", itv.Harassment);
-                cmd.Parameters.AddWithValue("@gs", itv.GenderOrientation);
-                cmd.Parameters.AddWithValue("@oth", itv.Other);
+                cmd.Parameters.AddWithValue("@ab", itv.addictive_behaviors);
+                cmd.Parameters.AddWithValue("@ic", itv.critical_incident);
+                cmd.Parameters.AddWithValue("@sc", itv.student_conflict);
+                cmd.Parameters.AddWithValue("@iv", itv.incivility_violence);
+                cmd.Parameters.AddWithValue("@gr", itv.grief);
+                cmd.Parameters.AddWithValue("@uh", itv.unhappiness);
+                cmd.Parameters.AddWithValue("@ld", itv.learning_difficulties);
+                cmd.Parameters.AddWithValue("@cg", itv.career_guidance_issues);
+                cmd.Parameters.AddWithValue("@fd", itv.family_difficulties);
+                cmd.Parameters.AddWithValue("@st", itv.stress);
+                cmd.Parameters.AddWithValue("@fdif", itv.financial_difficulties);
+                cmd.Parameters.AddWithValue("@sa", itv.suspected_abuse);
+                cmd.Parameters.AddWithValue("@dis", itv.discrimination);
+                cmd.Parameters.AddWithValue("@dt", itv.difficulties_tensions_with_a_teacher);
+                cmd.Parameters.AddWithValue("@har", itv.harassment_intimidation);
+                cmd.Parameters.AddWithValue("@gs", itv.gender_sexual_orientation);
+                cmd.Parameters.AddWithValue("@oth", itv.other);
 
                 cmd.ExecuteNonQuery();
                 return (int)cmd.LastInsertedId;
             }
         }
+    }
+
+    public Interview GetById(int id)
+    {
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+            string sql = "SELECT * FROM interviews WHERE id = @id";
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        var interview = new Interview
+                        {
+                            Id = reader.GetInt32("id"),
+                            Time = reader.GetInt32("time"),
+                            InterviewTypeId = reader.GetInt32("interviews_types_id")
+                        };
+
+                        // Lire tous les champs booléens
+                        foreach (var prop in typeof(Interview).GetProperties())
+                        {
+                            if (prop.PropertyType == typeof(bool))
+                            {
+                                int ordinal = reader.GetOrdinal(prop.Name);
+                                if (!reader.IsDBNull(ordinal))
+                                {
+                                    prop.SetValue(interview, reader.GetBoolean(ordinal));
+                                }
+                            }
+                        }
+
+                        return interview;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }

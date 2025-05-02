@@ -44,6 +44,46 @@ partial class DataPage
             AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
             ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
         };
+        ChargerDonnees();
+
+        //// Fixer la colonne "Date"
+        //dataGrid.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        //dataGrid.Columns["Date"].Width = 100;
+        //dataGrid.Columns["Date"].DisplayIndex = 0;
+
+        //// Fixer la colonne "TempsAdmin"
+        //dataGrid.Columns["TempsAdmin"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        //dataGrid.Columns["TempsAdmin"].Width = 80;
+        //dataGrid.Columns["TempsAdmin"].DisplayIndex = 1;
+
+        //// Fixer la colonne "Duree"
+        //dataGrid.Columns["Duree"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        //dataGrid.Columns["Duree"].Width = 80;
+        //dataGrid.Columns["Duree"].DisplayIndex = 2;
+
+        //// Fixer la colonne "Type"
+        //dataGrid.Columns["Type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+        //dataGrid.Columns["Type"].Width = 90;
+        //dataGrid.Columns["Type"].DisplayIndex = 3;
+
+        //// Étendre automatiquement les colonnes longues
+        //dataGrid.Columns["Sujet"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        //dataGrid.Columns["Sujet"].DisplayIndex = 4;
+        //dataGrid.Columns["Personnes"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        //dataGrid.Columns["Personnes"].DisplayIndex = 5;
+        //dataGrid.Columns["Motivations"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        //dataGrid.Columns["Motivations"].DisplayIndex = 6;
+
+        //// Définir un minimum pour éviter l’écrasement si la fenêtre est trop étroite
+        //dataGrid.Columns["Sujet"].MinimumWidth = 120;
+        //dataGrid.Columns["Personnes"].MinimumWidth = 120;
+        //dataGrid.Columns["Motivations"].MinimumWidth = 200;
+
+
+        //// Centrer les colonnes numériques
+        //dataGrid.Columns["Duree"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        //dataGrid.Columns["TempsAdmin"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        //dataGrid.Columns["Type"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
         // Ajout au panel top
         this.panelTop.Controls.Add(this.btnAjouter);

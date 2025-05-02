@@ -68,7 +68,7 @@ partial class NewEntryForm
         this.tabType = new TabControl()
         {
             Location = new System.Drawing.Point(20, 220),
-            Size = new System.Drawing.Size(420, 380)
+            Size = new System.Drawing.Size(420, 400)
         };
 
         this.tabSeance = new TabPage()
@@ -168,9 +168,9 @@ partial class NewEntryForm
 
         // Onglet Entretien
 
-        this.radioSeul = new RadioButton() { Text = "Seul", Location = new Point(20, 20), Checked = true };
-        this.radioGroupe = new RadioButton() { Text = "Groupe", Location = new Point(100, 20) };
-        this.radioClasse = new RadioButton() { Text = "Classe", Location = new Point(200, 20) };
+        this.radioSeul = new RadioButton() { Text = "Seul", Location = new Point(20, 10)};
+        this.radioGroupe = new RadioButton() { Text = "Groupe", Location = new Point(100, 10) };
+        this.radioClasse = new RadioButton() { Text = "Classe", Location = new Point(200, 10) };
         this.radioSeul.CheckedChanged += (s, e) => { selectedRadioButton = radioSeul; };
         this.radioGroupe.CheckedChanged += (s, e) => { selectedRadioButton = radioGroupe; };
         this.radioClasse.CheckedChanged += (s, e) => { selectedRadioButton = radioClasse; };
@@ -178,7 +178,7 @@ partial class NewEntryForm
         numDureeEntretien = new NumericUpDown()
         {
             Name = "numDureeEntretien",
-            Location = new Point(300, 20),
+            Location = new Point(300, 10),
             Minimum = 0,
             Maximum = 240,
             Value = 0,
@@ -189,13 +189,11 @@ partial class NewEntryForm
 
         this.table = new TableLayoutPanel()
         {
-            Location = new Point(10, 60),
-            Size = new Size(410, 280),
+            Location = new Point(10, 50),
+            Size = new Size(410, 310),
             ColumnCount = 2,
             RowCount = 1,
             Dock = DockStyle.None,
-            //AutoSize = true,
-            //AutoSizeMode = AutoSizeMode.GrowAndShrink,
             BackColor = System.Drawing.Color.Transparent
         };
 
@@ -206,7 +204,7 @@ partial class NewEntryForm
         string[] interventions = new string[]
 {
     "Conduites addictives", "Incident critique", "Conflit entre élèves",
-    "Incivilités / Violences", "Deuil", "Mal-hêtre", "Difficultés Apprentissage",
+    "Incivilités / Violences", "Deuil", "Mal-être", "Difficultés Apprentissage",
     "Question orientation professionnelle", "Difficultés familiales", "Stress", "Difficultés financières",
     "Suspicion maltraitance", "Discrimination", "Difficutés / tensions avec un∙e enseignant∙e enseignant∙e",
     "Harcèlement / Intimidation", "Genre - orientation sexuelle et affective", "Autre"
@@ -234,6 +232,7 @@ partial class NewEntryForm
                 var cb2 = new CheckBox()
                 {
                     Text = interventions[i + half],
+                    Name = interventions[i + half],
                     Dock = DockStyle.Left,
                     AutoSize = true
                 };
@@ -250,7 +249,7 @@ partial class NewEntryForm
         this.btnAjouter = new Button()
         {
             Text = "Ajouter",
-            Location = new System.Drawing.Point(30, 610),
+            Location = new System.Drawing.Point(30, 630),
             Width = 120,
             BackColor = System.Drawing.Color.FromArgb(0, 122, 204),
             ForeColor = System.Drawing.Color.White
@@ -264,7 +263,7 @@ partial class NewEntryForm
         });
 
         this.Text = "Nouvelle entrée";
-        this.Size = new System.Drawing.Size(470, 710);
+        this.Size = new System.Drawing.Size(470, 730);
         this.StartPosition = FormStartPosition.CenterParent;
     }
 

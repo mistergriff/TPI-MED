@@ -1,26 +1,24 @@
-﻿using System;
-
-public class Interview
+﻿public class Interview
 {
     public int Id { get; set; }
     public int Time { get; set; }
     public int InterviewTypeId { get; set; }
 
-    public bool AddictiveBehaviors { get; set; }
-    public bool CriticalIncident { get; set; }
-    public bool StudentConflict { get; set; }
-    public bool IncivilityViolence { get; set; }
-    public bool Grief { get; set; }
-    public bool Unhappiness { get; set; }
-    public bool LearningDifficulties { get; set; }
-    public bool CareerGuidanceIssues { get; set; }
-    public bool FamilyDifficulties { get; set; }
-    public bool Stress { get; set; }
-    public bool FinancialDifficulties { get; set; }
-    public bool SuspectedAbuse { get; set; }
-    public bool Discrimination { get; set; }
-    public bool TensionsWithTeacher { get; set; }
-    public bool Harassment { get; set; }
-    public bool GenderOrientation { get; set; }
-    public bool Other { get; set; }
+    public bool addictive_behaviors { get; set; }
+    public bool critical_incident { get; set; }
+    public bool student_conflict { get; set; }
+    public bool incivility_violence { get; set; }
+    public bool grief { get; set; }
+    public bool unhappiness { get; set; }
+    public bool learning_difficulties { get; set; }
+    public bool career_guidance_issues { get; set; }
+    public bool family_difficulties { get; set; }
+    public bool stress { get; set; }
+    public bool financial_difficulties { get; set; }
+    public bool suspected_abuse { get; set; }
+    public bool discrimination { get; set; }
+    public bool difficulties_tensions_with_a_teacher { get; set; }
+    public bool harassment_intimidation { get; set; }
+    public bool gender_sexual_orientation { get; set; }
+    public bool other { get; set; }
 }
