@@ -200,8 +200,6 @@ public partial class DataPage : UserControl
 
     }
 
-
-
     private void btnAjouter_Click(object sender, EventArgs e)
     {
         var form = new NewEntryForm();
@@ -228,10 +226,26 @@ public partial class DataPage : UserControl
             if (dataGrid.Columns[e.ColumnIndex].Name == "Edit")
             {
                 var ligne = dataGrid.Rows[e.RowIndex];
-                string sujet = ligne.Cells["Sujet"]?.Value?.ToString();
-                string date = ligne.Cells["Date"]?.Value?.ToString();
+                if (ligne.DataBoundItem is EventAffichage item)
+                {
+                    var evt = new EventDAO().GetById(item.Id);
+                    if (evt != null)
+                    {
+                        Interview interview = null;
+                        List<Seance> seances = null;
 
-                AlertBox.Show($"Édition de l'entrée : {sujet} ({date})", MessageBoxIcon.Information);
+                        if (evt.InterviewId.HasValue)
+                            interview = new InterviewDAO().GetById(evt.InterviewId.Value);
+                        else
+                            seances = new SeanceDAO().GetByEventId(evt.Id);
+
+                        var form = new NewEntryForm(evt, interview, seances);
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            ChargerDonnees();
+                        }
+                    }
+                }
             }
             else if (dataGrid.Columns[e.ColumnIndex].Name == "Delete")
             {

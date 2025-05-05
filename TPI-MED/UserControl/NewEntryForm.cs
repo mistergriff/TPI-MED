@@ -4,10 +4,46 @@ using Wisej.Web;
 
 public partial class NewEntryForm : Form
 {
-    public NewEntryForm()
+    private Event _eventToEdit;
+    private Interview _interviewToEdit;
+    private List<Seance> _seancesToEdit;
+
+    private readonly Dictionary<string, string> _labelToProperty = new Dictionary<string, string>()
+{
+    { "Conduites addictives", "addictive_behaviors" },
+    { "Incident critique", "critical_incident" },
+    { "Conflit entre élèves", "student_conflict" },
+    { "Incivilités / Violences", "incivility_violence" },
+    { "Deuil", "grief" },
+    { "Mal-être", "unhappiness" },
+    { "Difficultés Apprentissage", "learning_difficulties" },
+    { "Question orientation professionnelle", "career_guidance_issues" },
+    { "Difficultés familiales", "family_difficulties" },
+    { "Stress", "stress" },
+    { "Difficultés financières", "financial_difficulties" },
+    { "Suspicion maltraitance", "suspected_abuse" },
+    { "Discrimination", "discrimination" },
+    { "Difficutés / tensions avec un∙e enseignant∙e enseignant∙e", "difficulties_tensions_with_a_teacher" },
+    { "Harcèlement / Intimidation", "harassment_intimidation" },
+    { "Genre - orientation sexuelle et affective", "gender_sexual_orientation" },
+    { "Autre", "other" }
+};
+
+
+    public NewEntryForm(Event evt, Interview interview = null, List<Seance> seances = null)
     {
+        _eventToEdit = evt;
+        _interviewToEdit = interview;
+        _seancesToEdit = seances;
+        
         InitializeComponent();
+        RemplirChamps();
     }
+
+    public NewEntryForm() : this(null, null, null)
+    {
+    }
+
 
     private void btnAjouter_Click(object sender, EventArgs e)
     {
@@ -30,7 +66,7 @@ public partial class NewEntryForm : Form
         }
 
         int? interviewId = null;
-        int eventId;
+        int eventId = 0;
 
         int userId = (int)Application.Session["userId"];
 
@@ -91,28 +127,54 @@ public partial class NewEntryForm : Form
                 other = cbList.Contains("Autre")
             };
 
-            interviewId = new InterviewDAO().AjouterInterview(interview);
+            if (_eventToEdit == null)
+            {
+                interviewId = new InterviewDAO().AjouterInterview(interview);
+            }
+            else
+            {
+                interview.Id = _eventToEdit.InterviewId ?? 0;
+                new InterviewDAO().ModifierInterview(interview);
+                interviewId = interview.Id;
+            }
         }
 
         // Création de l'événement
-        var evenement = new Event()
+        if (_eventToEdit == null)
         {
-            Date = date,
-            Sujet = sujet,
-            Personne = personnes,
-            TempsAdmin = dureeAdmin,
-            UserId = userId,
-            InterviewId = interviewId
-        };
+            // Création d'un nouvel événement
+            var evenement = new Event()
+            {
+                Date = date,
+                Sujet = sujet,
+                Personne = personnes,
+                TempsAdmin = dureeAdmin,
+                UserId = userId,
+                InterviewId = interviewId
+            };
 
-        eventId = new EventDAO().AjouterEvenement(evenement);
+            eventId = new EventDAO().AjouterEvenement(evenement);
+        }
+        else
+        {
+            // Mise à jour de l'événement existant
+            _eventToEdit.Date = date;
+            _eventToEdit.Sujet = sujet;
+            _eventToEdit.Personne = personnes;
+            _eventToEdit.TempsAdmin = dureeAdmin;
+            _eventToEdit.InterviewId = interviewId;
+
+            new EventDAO().ModifierEvenement(_eventToEdit);
+            eventId = _eventToEdit.Id;
+        }
+
 
         // Enregistrer les séances si onglet Séance
         if (type == "Séance")
         {
             var seances = new List<Seance>();
 
-            void TryAddSeance(string nomChamp, string texte, int sessionTypeId)
+            void TryAddSeance(string texte, int sessionTypeId)
             {
                 if (int.TryParse(texte, out int t) && t > 0)
                 {
@@ -120,14 +182,14 @@ public partial class NewEntryForm : Form
                 }
             }
 
-            TryAddSeance("Direction", txtDirection.Text, 1);
-            TryAddSeance("Enseignant", txtEnseignant.Text, 2);
-            TryAddSeance("Équipe PSPS", txtEquipePSPS.Text, 3);
-            TryAddSeance("Projets", txtProjets.Text, 4);
-            TryAddSeance("Groupe MPP", txtGroupeMPP.Text, 5);
-            TryAddSeance("Réseau avec parents", txtReseauAvecParents.Text, 6);
-            TryAddSeance("Équipe pluri-réseau", txtEquipePluriReseau.Text, 7);
-            TryAddSeance("Autre", txtAutre.Text, 8);
+            TryAddSeance(txtDirection.Text, 1);
+            TryAddSeance(txtEnseignant.Text, 2);
+            TryAddSeance(txtEquipePSPS.Text, 3);
+            TryAddSeance(txtProjets.Text, 4);
+            TryAddSeance(txtGroupeMPP.Text, 5);
+            TryAddSeance(txtReseauAvecParents.Text, 6);
+            TryAddSeance(txtEquipePluriReseau.Text, 7);
+            TryAddSeance(txtAutre.Text, 8);
 
             if (seances.Count == 0)
             {
@@ -135,8 +197,7 @@ public partial class NewEntryForm : Form
                 return;
             }
 
-            if (seances.Count > 0)
-                new SeanceDAO().AjouterSeancesPourEvenement(eventId, seances);
+            new SeanceDAO().ModifierSeancesPourEvenement(eventId, seances);
         }
 
         AlertBox.Show("Entrée enregistrée avec succès !", MessageBoxIcon.Information);
@@ -144,4 +205,71 @@ public partial class NewEntryForm : Form
         this.Close();
     }
 
+    private void RemplirChamps()
+    {
+        if (_eventToEdit == null) return;
+
+        this.Text = "Editer l'entrée";
+        this.btnAjouter.Text = "Modifier";
+
+        // Champs communs
+        datePicker.Value = _eventToEdit.Date;
+        txtSujet.Text = _eventToEdit.Sujet;
+        txtPersonnes.Text = _eventToEdit.Personne;
+        numDuree.Value = _eventToEdit.TempsAdmin;
+
+        if (_eventToEdit.InterviewId.HasValue && _interviewToEdit != null)
+        {
+            tabType.SelectedTab = tabEntretien;
+            tabType.TabPages.Remove(tabSeance);
+            numDureeEntretien.Value = _interviewToEdit.Time;
+
+            switch (_interviewToEdit.InterviewTypeId)
+            {
+                case 1: radioSeul.Checked = true; break;
+                case 2: radioGroupe.Checked = true; break;
+                case 3: radioClasse.Checked = true; break;
+            }
+
+            // Check des motivations
+            var boolProps = typeof(Interview).GetProperties();
+            foreach (var prop in boolProps)
+            {
+                if (prop.PropertyType == typeof(bool) && (bool)prop.GetValue(_interviewToEdit))
+                {
+                    foreach (Control ctrl in table.Controls)
+                    {
+                        if (ctrl is CheckBox cb && _labelToProperty.TryGetValue(cb.Text, out var propName))
+                        {
+                            var propInfo = typeof(Interview).GetProperty(propName);
+                            if (propInfo != null && propInfo.PropertyType == typeof(bool) && (bool)propInfo.GetValue(_interviewToEdit))
+                            {
+                                cb.Checked = true;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        else if (_seancesToEdit != null)
+        {
+            tabType.SelectedTab = tabSeance;
+            tabType.TabPages.Remove(tabEntretien);
+            foreach (var seance in _seancesToEdit)
+            {
+                switch (seance.TypeId)
+                {
+                    case 1: txtDirection.Text = seance.Temps.ToString(); break;
+                    case 2: txtEnseignant.Text = seance.Temps.ToString(); break;
+                    case 3: txtEquipePSPS.Text = seance.Temps.ToString(); break;
+                    case 4: txtProjets.Text = seance.Temps.ToString(); break;
+                    case 5: txtGroupeMPP.Text = seance.Temps.ToString(); break;
+                    case 6: txtReseauAvecParents.Text = seance.Temps.ToString(); break;
+                    case 7: txtEquipePluriReseau.Text = seance.Temps.ToString(); break;
+                    case 8: txtAutre.Text = seance.Temps.ToString(); break;
+                }
+            }
+        }
+    }
 }

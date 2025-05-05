@@ -48,6 +48,62 @@ public class InterviewDAO
         }
     }
 
+    public bool ModifierInterview(Interview interview)
+    {
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+            string sql = @"UPDATE interviews SET 
+            time = @time,
+            interviews_types_id = @typeId,
+            addictive_behaviors = @addictive,
+            critical_incident = @critical,
+            student_conflict = @conflict,
+            incivility_violence = @violence,
+            grief = @grief,
+            unhappiness = @unhappy,
+            learning_difficulties = @learning,
+            career_guidance_issues = @career,
+            family_difficulties = @family,
+            stress = @stress,
+            financial_difficulties = @financial,
+            suspected_abuse = @abuse,
+            discrimination = @discrimination,
+            difficulties_tensions_with_a_teacher = @tension,
+            harassment_intimidation = @harassment,
+            gender_sexual_orientation = @gender,
+            other = @other
+            WHERE id = @id";
+
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", interview.Id);
+                cmd.Parameters.AddWithValue("@time", interview.Time);
+                cmd.Parameters.AddWithValue("@typeId", interview.InterviewTypeId);
+                cmd.Parameters.AddWithValue("@addictive", interview.addictive_behaviors);
+                cmd.Parameters.AddWithValue("@critical", interview.critical_incident);
+                cmd.Parameters.AddWithValue("@conflict", interview.student_conflict);
+                cmd.Parameters.AddWithValue("@violence", interview.incivility_violence);
+                cmd.Parameters.AddWithValue("@grief", interview.grief);
+                cmd.Parameters.AddWithValue("@unhappy", interview.unhappiness);
+                cmd.Parameters.AddWithValue("@learning", interview.learning_difficulties);
+                cmd.Parameters.AddWithValue("@career", interview.career_guidance_issues);
+                cmd.Parameters.AddWithValue("@family", interview.family_difficulties);
+                cmd.Parameters.AddWithValue("@stress", interview.stress);
+                cmd.Parameters.AddWithValue("@financial", interview.financial_difficulties);
+                cmd.Parameters.AddWithValue("@abuse", interview.suspected_abuse);
+                cmd.Parameters.AddWithValue("@discrimination", interview.discrimination);
+                cmd.Parameters.AddWithValue("@tension", interview.difficulties_tensions_with_a_teacher);
+                cmd.Parameters.AddWithValue("@harassment", interview.harassment_intimidation);
+                cmd.Parameters.AddWithValue("@gender", interview.gender_sexual_orientation);
+                cmd.Parameters.AddWithValue("@other", interview.other);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+    }
+
+
     public Interview GetById(int id)
     {
         using (var conn = Database.GetConnection())
@@ -86,7 +142,6 @@ public class InterviewDAO
                 }
             }
         }
-
         return null;
     }
 }

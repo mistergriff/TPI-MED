@@ -59,6 +59,61 @@ public class EventDAO
         return result;
     }
 
+    public Event GetById(int id)
+    {
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+            string sql = "SELECT * FROM events WHERE id = @id";
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new Event
+                        {
+                            Id = reader.GetInt32("id"),
+                            Date = reader.GetDateTime("date"),
+                            Sujet = reader.GetString("subject"),
+                            Personne = reader.GetString("person"),
+                            TempsAdmin = reader.GetInt32("adminTime"),
+                            UserId = reader.GetInt32("users_id"),
+                            InterviewId = reader.IsDBNull(reader.GetOrdinal("interviews_id")) ? (int?)null : reader.GetInt32("interviews_id")
+                        };
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public bool ModifierEvenement(Event evt)
+    {
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+            string sql = @"UPDATE events 
+                       SET date = @date, subject = @subject, person = @person, adminTime = @adminTime, users_id = @userId, interviews_id = @interviewId 
+                       WHERE id = @id";
+
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@date", evt.Date);
+                cmd.Parameters.AddWithValue("@subject", evt.Sujet);
+                cmd.Parameters.AddWithValue("@person", evt.Personne);
+                cmd.Parameters.AddWithValue("@adminTime", evt.TempsAdmin);
+                cmd.Parameters.AddWithValue("@userId", evt.UserId);
+                cmd.Parameters.AddWithValue("@interviewId", evt.InterviewId.HasValue ? (object)evt.InterviewId.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("@id", evt.Id);
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+    }
+
+
     public bool SupprimerEvenement(int id)
     {
         using (var conn = Database.GetConnection())
