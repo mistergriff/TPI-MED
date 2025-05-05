@@ -43,6 +43,7 @@ partial class DataPage
             AutoGenerateColumns = true,
             AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
             ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
+            ScrollBars = ScrollBars.Vertical,
         };
 
         // Ajout au panel top
