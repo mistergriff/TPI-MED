@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Wisej.Web;
 
@@ -55,7 +54,6 @@ public partial class DataPage : UserControl
                 duree = interview?.Time ?? 0;
 
                 var motifs = new List<string>();
-
                 foreach (var prop in typeof(Interview).GetProperties())
                 {
                     if (prop.PropertyType == typeof(bool)
@@ -68,6 +66,14 @@ public partial class DataPage : UserControl
 
                 motivations = string.Join(", ", motifs);
             }
+            else
+            {
+                var seances = new SeanceDAO().GetByEventId(evt.Id);
+                duree = 0;
+                foreach (var s in seances)
+                    duree += s.Temps;
+            }
+
 
             string typeAffichage;
             string typeEntretien = "";
