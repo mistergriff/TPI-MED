@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 
 public class EventDAO
@@ -58,4 +59,43 @@ public class EventDAO
         return result;
     }
 
+    public bool SupprimerEvenement(int id)
+    {
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+
+            // 1. Récupérer l'ID de l'interview liée
+            int? interviewId = null;
+            string getInterviewSql = "SELECT interviews_id FROM events WHERE id = @id";
+            using (var getCmd = new MySqlCommand(getInterviewSql, conn))
+            {
+                getCmd.Parameters.AddWithValue("@id", id);
+                var result = getCmd.ExecuteScalar();
+                if (result != DBNull.Value && result != null)
+                    interviewId = Convert.ToInt32(result);
+            }
+
+            // 2. Supprimer l’événement (en premier pour libérer la contrainte)
+            string deleteEventSql = "DELETE FROM events WHERE id = @id";
+            using (var deleteCmd = new MySqlCommand(deleteEventSql, conn))
+            {
+                deleteCmd.Parameters.AddWithValue("@id", id);
+                deleteCmd.ExecuteNonQuery();
+            }
+
+            // 3. Supprimer l’interview si elle existe
+            if (interviewId.HasValue)
+            {
+                string deleteInterviewSql = "DELETE FROM interviews WHERE id = @interviewId";
+                using (var deleteCmd = new MySqlCommand(deleteInterviewSql, conn))
+                {
+                    deleteCmd.Parameters.AddWithValue("@interviewId", interviewId.Value);
+                    deleteCmd.ExecuteNonQuery();
+                }
+            }
+
+            return true;
+        }
+    }
 }
