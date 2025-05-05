@@ -17,14 +17,34 @@ public partial class NewEntryForm : Form
         var dureeAdmin = (int)numDuree.Value;
         var type = tabType.SelectedTab.Text;
 
+        if (string.IsNullOrEmpty(sujet))
+        {
+            AlertBox.Show("Veuillez entrer un sujet.", MessageBoxIcon.Warning);
+            return;
+        }
+
+        if (string.IsNullOrEmpty(personnes))
+        {
+            AlertBox.Show("Veuillez entrer des personnes.", MessageBoxIcon.Warning);
+            return;
+        }
+
         int? interviewId = null;
         int eventId;
 
-        int userId = 1;
+        int userId = (int)Application.Session["userId"];
 
         if (type == "Entretien")
         {
             string radioButtonSelection = selectedRadioButton.Text;
+
+            if (string.IsNullOrEmpty(radioButtonSelection))
+            {
+                AlertBox.Show("Veuillez sélectionner un type d'entretien.", MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Déterminer l'ID du type d'entretien en fonction de la sélection
             int interviewTypeId;
             switch (radioButtonSelection)
             {
@@ -41,6 +61,12 @@ public partial class NewEntryForm : Form
 
 
             var cbList = GetCheckedInterventionKeys(table);
+
+            if (cbList.Count == 0)
+            {
+                AlertBox.Show("Veuillez sélectionner au moins une motivation.", MessageBoxIcon.Warning);
+                return;
+            }
 
             var interview = new Interview()
             {
@@ -103,11 +129,18 @@ public partial class NewEntryForm : Form
             TryAddSeance("Équipe pluri-réseau", txtEquipePluriReseau.Text, 7);
             TryAddSeance("Autre", txtAutre.Text, 8);
 
+            if (seances.Count == 0)
+            {
+                AlertBox.Show("Veuillez entrer au moins un temps de séance.", MessageBoxIcon.Warning);
+                return;
+            }
+
             if (seances.Count > 0)
                 new SeanceDAO().AjouterSeancesPourEvenement(eventId, seances);
         }
 
         AlertBox.Show("Entrée enregistrée avec succès !", MessageBoxIcon.Information);
+        this.DialogResult = DialogResult.OK;
         this.Close();
     }
 

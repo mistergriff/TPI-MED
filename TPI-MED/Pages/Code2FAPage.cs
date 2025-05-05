@@ -51,6 +51,9 @@ public partial class Code2FAPage : Page
             lblMessage.Text = "Code valide. Connexion réussie.";
             lblMessage.ForeColor = System.Drawing.Color.SeaGreen;
 
+            Application.Session["userId"] = _utilisateurId;
+            Application.Session["userName"] = utilisateur.Nom;
+
             // Invalide le code 2FA dans la base de données.
             dao.InvaliderCode2FA(_utilisateurId);
 
