@@ -20,7 +20,6 @@
 
     private void initializeComponents()
     {
-
     }
     #region Wisej.NET Designer generated code
 
