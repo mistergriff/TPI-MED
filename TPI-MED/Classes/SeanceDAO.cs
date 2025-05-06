@@ -93,4 +93,39 @@ public class SeanceDAO
 
         return seances;
     }
+
+    // Méthode pour SeanceDAO : Obtenir le total par type de session
+    public Dictionary<string, int> GetDureeTotaleParType(int userId)
+    {
+        var result = new Dictionary<string, int>();
+
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+            string sql = @"
+            SELECT st.name, SUM(ehst.time) AS total
+            FROM events_have_sessions_type ehst
+            JOIN sessions_types st ON ehst.sessions_types_id = st.id
+            JOIN events e ON e.id = ehst.events_id
+            WHERE e.users_id = @userId
+            GROUP BY st.name
+        ";
+
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@userId", userId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var name = reader.GetString("name");
+                        var total = reader.GetInt32("total");
+                        result[name] = total;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
 }

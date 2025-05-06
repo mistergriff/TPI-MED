@@ -1,6 +1,9 @@
 ﻿using Wisej.Web;
 using Wisej.Web.Ext.ChartJS;
 using System.Drawing;
+using System.Collections.Generic;
+using System;
+using System.Drawing.Printing;
 
 public partial class StatsPage : UserControl
 {
@@ -16,10 +19,24 @@ public partial class StatsPage : UserControl
         var layout = new FlowLayoutPanel
         {
             Dock = DockStyle.Fill,
+            Location = new Point(10, 40),
             FlowDirection = FlowDirection.LeftToRight,
             AutoScroll = true,
             Padding = new Padding(20)
         };
+
+        var btnExport = new Button
+        {
+            Text = "Export en PDF",
+            Width = 100,
+            Height = 20,
+            Location = new Point(10, 10),
+            BackColor = Color.FromArgb(0, 255, 0),
+            ForeColor = Color.White,
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),
+            TextAlign = ContentAlignment.MiddleCenter
+        };
+        btnExport.Click += btnExport_Click;
 
         layout.Controls.Add(CreateChart_Repartition());
         layout.Controls.Add(CreateChart_Contexte());
@@ -30,72 +47,68 @@ public partial class StatsPage : UserControl
 
     private ChartJS CreateChart_Repartition()
     {
+        int userId = (int)Application.Session["userId"];
+        var data = new SeanceDAO().GetDureeTotaleParType(userId);
+
+        var labels = new List<string>();
+        var values = new List<object>();
+
+        foreach (var entry in data)
+        {
+            labels.Add(entry.Key);
+            values.Add(entry.Value);
+        }
+
         var chart = new ChartJS
         {
             Width = 450,
             Height = 600,
+            Padding = new Padding(10),
             ChartType = ChartType.Pie,
             BackColor = Color.LightBlue,
-            Labels = new[]
-            {
-            "Temps dévolu autour de la situation / séance",
-            "Direction",
-            "Groupe MPP/Pikas",
-            "Enseignant-e-s",
-            "Réseau avec parents",
-            "Equipe PSPS",
-            "Equipe pluridis. Réseau",
-            "Projets",
-            "Autre"
-        }
+            Labels = labels.ToArray()
         };
-
-        chart.
 
         var dataSet = new PieDataSet
         {
             Label = "Répartition du travail",
-            Data = new object[] { 20, 15, 10, 12, 8, 10, 5, 10, 10 },
-            BackgroundColor = new[]
-            {
-            Color.FromArgb(62, 149, 205),  // Bleu
-            Color.FromArgb(255, 159, 64),  // Orange
-            Color.FromArgb(176, 58, 72),   // Rouge
-            Color.FromArgb(169, 209, 142), // Vert clair
-            Color.FromArgb(153, 102, 255), // Violet clair
-            Color.FromArgb(255, 205, 86),  // Jaune
-            Color.FromArgb(75, 192, 192),  // Vert turquoise
-            Color.FromArgb(201, 203, 207), // Gris clair
-            Color.FromArgb(54, 162, 235)   // Bleu clair
-        }
+            Data = values.ToArray(),
+            BackgroundColor = ChartColorHelper.GenerateColors(labels.Count)
         };
 
         chart.DataSets.Add(dataSet);
         return chart;
     }
 
-
     private ChartJS CreateChart_Contexte()
     {
+        int userId = (int)Application.Session["userId"];
+        var data = new InterviewDAO().GetDureeParType(userId);
+
+        var labels = new List<string>();
+        var values = new List<object>();
+
+        foreach (var entry in data)
+        {
+            labels.Add(entry.Key);
+            values.Add(entry.Value);
+        }
+
         var chart = new ChartJS
         {
             Width = 450,
             Height = 600,
+            Padding = new Padding(10),
             ChartType = ChartType.Pie,
             BackColor = Color.LightBlue,
-            Labels = new[] { "Seul (min)", "Groupe (min)", "Classe (min)" }
+            Labels = labels.ToArray()
         };
 
         var dataSet = new PieDataSet
         {
             Label = "Contexte",
-            Data = new object[] { 56, 18, 26 },
-            BackgroundColor = new[]
-            {
-                    Color.FromArgb(62, 149, 205),  // Bleu
-                    Color.FromArgb(176, 58, 72),   // Rouge
-                    Color.FromArgb(169, 209, 142)  // Vert clair
-                }
+            Data = values.ToArray(),
+            BackgroundColor = ChartColorHelper.GenerateColors(labels.Count)
         };
 
         chart.DataSets.Add(dataSet);
@@ -104,64 +117,66 @@ public partial class StatsPage : UserControl
 
     private ChartJS CreateChart_Interventions()
     {
+        int userId = (int)Application.Session["userId"];
+        var data = new InterviewDAO().GetStatsMotivations(userId);
+
+        var labels = new List<string>();
+        var values = new List<object>();
+
+        foreach (var entry in data)
+        {
+            if (entry.Value > 0) // Filtrer les données inutiles
+            {
+                labels.Add(entry.Key);
+                values.Add(entry.Value);
+            }
+        }
+
         var chart = new ChartJS
         {
             Width = 450,
             Height = 600,
+            Padding = new Padding(10),
             ChartType = ChartType.Pie,
             BackColor = Color.LightBlue,
-            Labels = new[]
-            {
-            "Conduites addictives",
-            "Incident critique",
-            "Conflit entre élèves",
-            "Incivilités / Violences",
-            "Deuil",
-            "Mal-être",
-            "Difficultés Apprentissage",
-            "Question orientation professionnelle",
-            "Difficultés familiales",
-            "Stress",
-            "Difficultés financières",
-            "Suspicion maltraitance",
-            "Discrimination",
-            "Difficultés / tensions avec un∙e enseignant∙e",
-            "Harcèlement / Intimidation",
-            "Genre - orientation sexuelle et affective",
-            "Autre"
-        }
+            Labels = labels.ToArray()
         };
 
         var dataSet = new PieDataSet
         {
             Label = "Types d'interventions",
-            Data = new object[]
-            {
-            10, 5, 8, 12, 3, 15, 7, 4, 6, 20, 2, 1, 3, 5, 9, 4, 6
-            },
-            BackgroundColor = new[]
-            {
-            Color.FromArgb(128, 100, 162), // Violet
-            Color.FromArgb(47, 85, 151),   // Bleu foncé
-            Color.FromArgb(169, 209, 142), // Vert clair
-            Color.FromArgb(255, 159, 64),  // Orange
-            Color.FromArgb(176, 58, 72),   // Rouge
-            Color.FromArgb(62, 149, 205),  // Bleu
-            Color.FromArgb(255, 205, 86),  // Jaune
-            Color.FromArgb(153, 102, 255), // Violet clair
-            Color.FromArgb(201, 203, 207), // Gris clair
-            Color.FromArgb(54, 162, 235),  // Bleu clair
-            Color.FromArgb(255, 99, 132),  // Rouge clair
-            Color.FromArgb(75, 192, 192),  // Vert turquoise
-            Color.FromArgb(255, 206, 86),  // Jaune clair
-            Color.FromArgb(153, 102, 255), // Violet clair
-            Color.FromArgb(201, 203, 207), // Gris clair
-            Color.FromArgb(54, 162, 235),  // Bleu clair
-            Color.FromArgb(255, 99, 132)   // Rouge clair
-        }
+            Data = values.ToArray(),
+            BackgroundColor = ChartColorHelper.GenerateColors(labels.Count)
         };
 
         chart.DataSets.Add(dataSet);
         return chart;
+    }
+
+
+    public static class ChartColorHelper
+    {
+        public static Color[] GenerateColors(int count)
+        {
+            var palette = new Color[]
+            {
+            Color.FromArgb(62, 149, 205), Color.FromArgb(255, 159, 64), Color.FromArgb(176, 58, 72),
+            Color.FromArgb(169, 209, 142), Color.FromArgb(153, 102, 255), Color.FromArgb(255, 205, 86),
+            Color.FromArgb(75, 192, 192), Color.FromArgb(201, 203, 207), Color.FromArgb(54, 162, 235),
+            Color.FromArgb(255, 99, 132), Color.FromArgb(128, 100, 162), Color.FromArgb(47, 85, 151)
+            };
+
+            var result = new List<Color>();
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(palette[i % palette.Length]);
+            }
+            return result.ToArray();
+        }
+    }
+
+    private void btnExport_Click(object sender, EventArgs e)
+    {
+        AlertBox.Show("Export du document en PDF à venir.");
     }
 }

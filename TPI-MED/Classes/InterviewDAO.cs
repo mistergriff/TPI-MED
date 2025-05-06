@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using Mysqlx.Crud;
+using System.Collections.Generic;
+using System.Linq;
 
 public class InterviewDAO
 {
@@ -143,5 +145,113 @@ public class InterviewDAO
             }
         }
         return null;
+    }
+
+    // Méthode pour InterviewDAO : Obtenir la durée par type d'interview (seul/groupe/classe)
+    public Dictionary<string, int> GetDureeParType(int userId)
+    {
+        var result = new Dictionary<string, int>();
+
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+
+            string sql = @"
+            SELECT it.name, SUM(i.time) AS duree
+            FROM interviews i
+            JOIN events e ON e.interviews_id = i.id
+            JOIN interviews_types it ON it.id = i.interviews_types_id
+            WHERE e.users_id = @userId
+            GROUP BY it.name";
+
+
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@userId", userId);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string label = reader.GetString("name");
+                        int duree = reader.GetInt32("Duree");
+
+                        result[label] = duree;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // Méthode pour InterviewDAO : Obtenir la somme des motivations cochées
+    public Dictionary<string, int> GetStatsMotivations(int userId)
+    {
+        var motivations = new Dictionary<string, int>
+    {
+        { "addictive_behaviors", 0 },
+        { "critical_incident", 0 },
+        { "student_conflict", 0 },
+        { "incivility_violence", 0 },
+        { "grief", 0 },
+        { "unhappiness", 0 },
+        { "learning_difficulties", 0 },
+        { "career_guidance_issues", 0 },
+        { "family_difficulties", 0 },
+        { "stress", 0 },
+        { "financial_difficulties", 0 },
+        { "suspected_abuse", 0 },
+        { "discrimination", 0 },
+        { "difficulties_tensions_with_a_teacher", 0 },
+        { "harassment_intimidation", 0 },
+        { "gender_sexual_orientation", 0 },
+        { "other", 0 }
+    };
+
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+            string sql = @"
+            SELECT 
+                SUM(addictive_behaviors) as addictive_behaviors,
+                SUM(critical_incident) as critical_incident,
+                SUM(student_conflict) as student_conflict,
+                SUM(incivility_violence) as incivility_violence,
+                SUM(grief) as grief,
+                SUM(unhappiness) as unhappiness,
+                SUM(learning_difficulties) as learning_difficulties,
+                SUM(career_guidance_issues) as career_guidance_issues,
+                SUM(family_difficulties) as family_difficulties,
+                SUM(stress) as stress,
+                SUM(financial_difficulties) as financial_difficulties,
+                SUM(suspected_abuse) as suspected_abuse,
+                SUM(discrimination) as discrimination,
+                SUM(difficulties_tensions_with_a_teacher) as difficulties_tensions_with_a_teacher,
+                SUM(harassment_intimidation) as harassment_intimidation,
+                SUM(gender_sexual_orientation) as gender_sexual_orientation,
+                SUM(other) as other
+            FROM interviews i
+            JOIN events e ON e.interviews_id = i.id
+            WHERE e.users_id = @userId
+        ";
+
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@userId", userId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        foreach (var key in motivations.Keys.ToList())
+                        {
+                            motivations[key] = reader.IsDBNull(reader.GetOrdinal(key)) ? 0 : reader.GetInt32(key);
+                        }
+                    }
+                }
+            }
+        }
+
+        return motivations;
     }
 }
