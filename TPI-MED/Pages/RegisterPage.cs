@@ -99,7 +99,7 @@ public partial class RegisterPage : Page
     {
         return System.Text.RegularExpressions.Regex.IsMatch(
             email,
-            @"^[a-zA-Z0-9._%+-]+@(eduvaud\.ch|edu-vd\.ch|mediateur\.mycpnv\.ch | vd\.ch)$",
+            @"^[a-zA-Z0-9._%+-]+@(eduvaud\.ch|edu-vd\.ch|mediateur\.mycpnv\.ch | vd\.ch | ldg-tech.ch)$",
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
     }
 
