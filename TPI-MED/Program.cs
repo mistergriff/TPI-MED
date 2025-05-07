@@ -40,7 +40,6 @@ namespace TPI_MED
             else
             {
                 // Si aucun token n'est présent, redirige vers la page de connexion.
-
                 Application.SetSessionTimeout(10 * 60); // Définit le délai d'inactivité de la session à 10 minutes.
                 Application.MainPage = new LoginPage();
             }

@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// Fournit des méthodes pour gérer les séances associées aux événements dans la base de données.
+/// </summary>
 public class SeanceDAO
 {
     /// <summary>
     /// Ajoute une ou plusieurs séances associées à un événement.
     /// </summary>
-    /// <param name="eventId">L'ID de l'événement.</param>
+    /// <param name="eventId">L'identifiant de l'événement.</param>
     /// <param name="seances">Liste des séances à ajouter.</param>
     public void AjouterSeancesPourEvenement(int eventId, List<Seance> seances)
     {
@@ -32,6 +35,11 @@ public class SeanceDAO
         }
     }
 
+    /// <summary>
+    /// Modifie les séances associées à un événement en supprimant les anciennes et en ajoutant les nouvelles.
+    /// </summary>
+    /// <param name="eventId">L'identifiant de l'événement.</param>
+    /// <param name="seances">Liste des nouvelles séances à associer à l'événement.</param>
     public void ModifierSeancesPourEvenement(int eventId, List<Seance> seances)
     {
         using (var conn = Database.GetConnection())
@@ -63,7 +71,11 @@ public class SeanceDAO
         }
     }
 
-
+    /// <summary>
+    /// Récupère toutes les séances associées à un événement donné.
+    /// </summary>
+    /// <param name="eventId">L'identifiant de l'événement.</param>
+    /// <returns>Une liste de séances associées à l'événement.</returns>
     public List<Seance> GetByEventId(int eventId)
     {
         var seances = new List<Seance>();
@@ -94,7 +106,11 @@ public class SeanceDAO
         return seances;
     }
 
-    // Méthode pour SeanceDAO : Obtenir le total par type de session
+    /// <summary>
+    /// Récupère la durée totale des séances par type pour un utilisateur donné.
+    /// </summary>
+    /// <param name="userId">L'identifiant de l'utilisateur.</param>
+    /// <returns>Un dictionnaire contenant les types de séances et leur durée totale.</returns>
     public Dictionary<string, int> GetDureeTotaleParType(int userId)
     {
         var result = new Dictionary<string, int>();

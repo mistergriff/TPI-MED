@@ -2,49 +2,79 @@
 using System.Collections.Generic;
 using Wisej.Web;
 
+/// <summary>
+/// Formulaire pour ajouter ou modifier une nouvelle entrée (événement, entretien ou séance).
+/// </summary>
 public partial class NewEntryForm : Form
 {
+    /// <summary>
+    /// Événement à éditer (si applicable).
+    /// </summary>
     private Event _eventToEdit;
+
+    /// <summary>
+    /// Entretien à éditer (si applicable).
+    /// </summary>
     private Interview _interviewToEdit;
+
+    /// <summary>
+    /// Liste des séances à éditer (si applicable).
+    /// </summary>
     private List<Seance> _seancesToEdit;
 
+    /// <summary>
+    /// Dictionnaire associant les libellés des motivations aux propriétés correspondantes.
+    /// </summary>
     private readonly Dictionary<string, string> _labelToProperty = new Dictionary<string, string>()
-{
-    { "Conduites addictives", "addictive_behaviors" },
-    { "Incident critique", "critical_incident" },
-    { "Conflit entre élèves", "student_conflict" },
-    { "Incivilités / Violences", "incivility_violence" },
-    { "Deuil", "grief" },
-    { "Mal-être", "unhappiness" },
-    { "Difficultés Apprentissage", "learning_difficulties" },
-    { "Question orientation professionnelle", "career_guidance_issues" },
-    { "Difficultés familiales", "family_difficulties" },
-    { "Stress", "stress" },
-    { "Difficultés financières", "financial_difficulties" },
-    { "Suspicion maltraitance", "suspected_abuse" },
-    { "Discrimination", "discrimination" },
-    { "Difficutés / tensions avec un∙e enseignant∙e enseignant∙e", "difficulties_tensions_with_a_teacher" },
-    { "Harcèlement / Intimidation", "harassment_intimidation" },
-    { "Genre - orientation sexuelle et affective", "gender_sexual_orientation" },
-    { "Autre", "other" }
-};
+    {
+        { "Conduites addictives", "addictive_behaviors" },
+        { "Incident critique", "critical_incident" },
+        { "Conflit entre élèves", "student_conflict" },
+        { "Incivilités / Violences", "incivility_violence" },
+        { "Deuil", "grief" },
+        { "Mal-être", "unhappiness" },
+        { "Difficultés Apprentissage", "learning_difficulties" },
+        { "Question orientation professionnelle", "career_guidance_issues" },
+        { "Difficultés familiales", "family_difficulties" },
+        { "Stress", "stress" },
+        { "Difficultés financières", "financial_difficulties" },
+        { "Suspicion maltraitance", "suspected_abuse" },
+        { "Discrimination", "discrimination" },
+        { "Difficutés / tensions avec un∙e enseignant∙e", "difficulties_tensions_with_a_teacher" },
+        { "Harcèlement / Intimidation", "harassment_intimidation" },
+        { "Genre - orientation sexuelle et affective", "gender_sexual_orientation" },
+        { "Autre", "other" }
+    };
 
-
+    /// <summary>
+    /// Initialise une nouvelle instance de la classe <see cref="NewEntryForm"/>.
+    /// </summary>
+    /// <param name="evt">Événement à éditer (ou null pour un nouvel événement).</param>
+    /// <param name="interview">Entretien à éditer (ou null).</param>
+    /// <param name="seances">Liste des séances à éditer (ou null).</param>
     public NewEntryForm(Event evt, Interview interview = null, List<Seance> seances = null)
     {
         _eventToEdit = evt;
         _interviewToEdit = interview;
         _seancesToEdit = seances;
-        
+
         InitializeComponent();
         RemplirChamps();
     }
 
+    /// <summary>
+    /// Initialise une nouvelle instance de la classe <see cref="NewEntryForm"/> sans paramètres.
+    /// </summary>
     public NewEntryForm() : this(null, null, null)
     {
     }
 
-
+    /// <summary>
+    /// Gère l'événement de clic sur le bouton "Ajouter".
+    /// Valide les données saisies et enregistre l'entrée (événement, entretien ou séance).
+    /// </summary>
+    /// <param name="sender">L'objet source de l'événement.</param>
+    /// <param name="e">Les données d'événement associées.</param>
     private void btnAjouter_Click(object sender, EventArgs e)
     {
         var date = datePicker.Value;
@@ -95,7 +125,6 @@ public partial class NewEntryForm : Form
                     break;
             }
 
-
             var cbList = GetCheckedInterventionKeys(table);
 
             if (cbList.Count == 0)
@@ -121,7 +150,7 @@ public partial class NewEntryForm : Form
                 financial_difficulties = cbList.Contains("Difficultés financières"),
                 suspected_abuse = cbList.Contains("Suspicion maltraitance"),
                 discrimination = cbList.Contains("Discrimination"),
-                difficulties_tensions_with_a_teacher = cbList.Contains("Difficutés / tensions avec un∙e enseignant∙e enseignant∙e"),
+                difficulties_tensions_with_a_teacher = cbList.Contains("Difficutés / tensions avec un∙e enseignant∙e"),
                 harassment_intimidation = cbList.Contains("Harcèlement / Intimidation"),
                 gender_sexual_orientation = cbList.Contains("Genre - orientation sexuelle et affective"),
                 other = cbList.Contains("Autre")
@@ -142,7 +171,6 @@ public partial class NewEntryForm : Form
         // Création de l'événement
         if (_eventToEdit == null)
         {
-            // Création d'un nouvel événement
             var evenement = new Event()
             {
                 Date = date,
@@ -157,7 +185,6 @@ public partial class NewEntryForm : Form
         }
         else
         {
-            // Mise à jour de l'événement existant
             _eventToEdit.Date = date;
             _eventToEdit.Sujet = sujet;
             _eventToEdit.Personne = personnes;
@@ -167,7 +194,6 @@ public partial class NewEntryForm : Form
             new EventDAO().ModifierEvenement(_eventToEdit);
             eventId = _eventToEdit.Id;
         }
-
 
         // Enregistrer les séances si onglet Séance
         if (type == "Séance")
@@ -205,6 +231,9 @@ public partial class NewEntryForm : Form
         this.Close();
     }
 
+    /// <summary>
+    /// Remplit les champs du formulaire avec les données de l'événement, de l'entretien ou des séances à éditer.
+    /// </summary>
     private void RemplirChamps()
     {
         if (_eventToEdit == null) return;
@@ -248,7 +277,6 @@ public partial class NewEntryForm : Form
                             }
                         }
                     }
-
                 }
             }
         }

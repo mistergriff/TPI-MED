@@ -1,10 +1,17 @@
 ﻿using MySql.Data.MySqlClient;
-using Mysqlx.Crud;
 using System.Collections.Generic;
 using System.Linq;
 
+/// <summary>
+/// Fournit des méthodes pour gérer les entretiens dans la base de données.
+/// </summary>
 public class InterviewDAO
 {
+    /// <summary>
+    /// Ajoute un nouvel entretien dans la base de données.
+    /// </summary>
+    /// <param name="itv">L'entretien à ajouter.</param>
+    /// <returns>L'identifiant de l'entretien nouvellement ajouté.</returns>
     public int AjouterInterview(Interview itv)
     {
         using (var conn = Database.GetConnection())
@@ -50,6 +57,11 @@ public class InterviewDAO
         }
     }
 
+    /// <summary>
+    /// Modifie un entretien existant dans la base de données.
+    /// </summary>
+    /// <param name="interview">L'entretien à modifier.</param>
+    /// <returns><c>true</c> si la modification a réussi, sinon <c>false</c>.</returns>
     public bool ModifierInterview(Interview interview)
     {
         using (var conn = Database.GetConnection())
@@ -105,7 +117,11 @@ public class InterviewDAO
         }
     }
 
-
+    /// <summary>
+    /// Récupère un entretien par son identifiant unique.
+    /// </summary>
+    /// <param name="id">L'identifiant de l'entretien.</param>
+    /// <returns>L'entretien correspondant ou <c>null</c> s'il n'existe pas.</returns>
     public Interview GetById(int id)
     {
         using (var conn = Database.GetConnection())
@@ -147,7 +163,11 @@ public class InterviewDAO
         return null;
     }
 
-    // Méthode pour InterviewDAO : Obtenir la durée par type d'interview (seul/groupe/classe)
+    /// <summary>
+    /// Récupère la durée totale des entretiens par type pour un utilisateur donné.
+    /// </summary>
+    /// <param name="userId">L'identifiant de l'utilisateur.</param>
+    /// <returns>Un dictionnaire contenant les types d'entretiens et leur durée totale.</returns>
     public Dictionary<string, int> GetDureeParType(int userId)
     {
         var result = new Dictionary<string, int>();
@@ -163,7 +183,6 @@ public class InterviewDAO
             JOIN interviews_types it ON it.id = i.interviews_types_id
             WHERE e.users_id = @userId
             GROUP BY it.name";
-
 
             using (var cmd = new MySqlCommand(sql, conn))
             {
@@ -185,29 +204,33 @@ public class InterviewDAO
         return result;
     }
 
-    // Méthode pour InterviewDAO : Obtenir la somme des motivations cochées
+    /// <summary>
+    /// Récupère les statistiques des motivations cochées pour un utilisateur donné.
+    /// </summary>
+    /// <param name="userId">L'identifiant de l'utilisateur.</param>
+    /// <returns>Un dictionnaire contenant les motivations et leur somme.</returns>
     public Dictionary<string, int> GetStatsMotivations(int userId)
     {
         var motivations = new Dictionary<string, int>
-    {
-        { "addictive_behaviors", 0 },
-        { "critical_incident", 0 },
-        { "student_conflict", 0 },
-        { "incivility_violence", 0 },
-        { "grief", 0 },
-        { "unhappiness", 0 },
-        { "learning_difficulties", 0 },
-        { "career_guidance_issues", 0 },
-        { "family_difficulties", 0 },
-        { "stress", 0 },
-        { "financial_difficulties", 0 },
-        { "suspected_abuse", 0 },
-        { "discrimination", 0 },
-        { "difficulties_tensions_with_a_teacher", 0 },
-        { "harassment_intimidation", 0 },
-        { "gender_sexual_orientation", 0 },
-        { "other", 0 }
-    };
+        {
+            { "addictive_behaviors", 0 },
+            { "critical_incident", 0 },
+            { "student_conflict", 0 },
+            { "incivility_violence", 0 },
+            { "grief", 0 },
+            { "unhappiness", 0 },
+            { "learning_difficulties", 0 },
+            { "career_guidance_issues", 0 },
+            { "family_difficulties", 0 },
+            { "stress", 0 },
+            { "financial_difficulties", 0 },
+            { "suspected_abuse", 0 },
+            { "discrimination", 0 },
+            { "difficulties_tensions_with_a_teacher", 0 },
+            { "harassment_intimidation", 0 },
+            { "gender_sexual_orientation", 0 },
+            { "other", 0 }
+        };
 
         using (var conn = Database.GetConnection())
         {
@@ -233,8 +256,7 @@ public class InterviewDAO
                 SUM(other) as other
             FROM interviews i
             JOIN events e ON e.interviews_id = i.id
-            WHERE e.users_id = @userId
-        ";
+            WHERE e.users_id = @userId";
 
             using (var cmd = new MySqlCommand(sql, conn))
             {

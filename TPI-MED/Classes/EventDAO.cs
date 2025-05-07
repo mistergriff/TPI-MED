@@ -2,8 +2,16 @@
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// Fournit des méthodes pour gérer les événements dans la base de données.
+/// </summary>
 public class EventDAO
 {
+    /// <summary>
+    /// Ajoute un nouvel événement dans la base de données.
+    /// </summary>
+    /// <param name="evt">L'événement à ajouter.</param>
+    /// <returns>L'identifiant de l'événement nouvellement ajouté.</returns>
     public int AjouterEvenement(Event evt)
     {
         using (var conn = Database.GetConnection())
@@ -26,6 +34,11 @@ public class EventDAO
         }
     }
 
+    /// <summary>
+    /// Récupère une liste d'événements associés à un utilisateur spécifique.
+    /// </summary>
+    /// <param name="userId">L'identifiant de l'utilisateur.</param>
+    /// <returns>Une liste d'événements associés à l'utilisateur.</returns>
     public List<Event> GetByUserId(int userId)
     {
         var result = new List<Event>();
@@ -59,6 +72,11 @@ public class EventDAO
         return result;
     }
 
+    /// <summary>
+    /// Récupère un événement par son identifiant unique.
+    /// </summary>
+    /// <param name="id">L'identifiant de l'événement.</param>
+    /// <returns>L'événement correspondant ou <c>null</c> s'il n'existe pas.</returns>
     public Event GetById(int id)
     {
         using (var conn = Database.GetConnection())
@@ -89,6 +107,11 @@ public class EventDAO
         return null;
     }
 
+    /// <summary>
+    /// Modifie un événement existant dans la base de données.
+    /// </summary>
+    /// <param name="evt">L'événement à modifier.</param>
+    /// <returns><c>true</c> si la modification a réussi, sinon <c>false</c>.</returns>
     public bool ModifierEvenement(Event evt)
     {
         using (var conn = Database.GetConnection())
@@ -113,7 +136,11 @@ public class EventDAO
         }
     }
 
-
+    /// <summary>
+    /// Supprime un événement de la base de données, ainsi que l'entretien associé s'il existe.
+    /// </summary>
+    /// <param name="id">L'identifiant de l'événement à supprimer.</param>
+    /// <returns><c>true</c> si la suppression a réussi, sinon <c>false</c>.</returns>
     public bool SupprimerEvenement(int id)
     {
         using (var conn = Database.GetConnection())

@@ -1,7 +1,28 @@
-﻿public class Seance
+﻿/// <summary>
+/// Représente une séance associée à un événement dans l'application.
+/// </summary>
+public class Seance
 {
-    public int Id { get; set; }         // events_have_sessions_type.id
-    public int TypeId { get; set; }     // sessions_types.id
-    public int EventId { get; set; }    // events_have_sessions_type.events_id
-    public int Temps { get; set; }      // durée (time)
+    /// <summary>
+    /// Obtient ou définit l'identifiant unique de la séance.
+    /// Correspond à l'identifiant dans la table events_have_sessions_type.
+    /// </summary>
+    public int Id { get; set; }
+
+    /// <summary>
+    /// Obtient ou définit l'identifiant du type de séance.
+    /// Correspond à l'identifiant dans la table sessions_types.
+    /// </summary>
+    public int TypeId { get; set; }
+
+    /// <summary>
+    /// Obtient ou définit l'identifiant de l'événement associé à la séance.
+    /// Correspond à l'identifiant dans la table events_have_sessions_type.events_id.
+    /// </summary>
+    public int EventId { get; set; }
+
+    /// <summary>
+    /// Obtient ou définit la durée de la séance (en minutes).
+    /// </summary>
+    public int Temps { get; set; }
 }
