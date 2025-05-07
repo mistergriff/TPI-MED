@@ -3,7 +3,6 @@ using Wisej.Web.Ext.ChartJS;
 using System.Drawing;
 using System.Collections.Generic;
 using System;
-using System.Drawing.Printing;
 
 public partial class StatsPage : UserControl
 {
@@ -19,7 +18,6 @@ public partial class StatsPage : UserControl
         var layout = new FlowLayoutPanel
         {
             Dock = DockStyle.Fill,
-            Location = new Point(10, 40),
             FlowDirection = FlowDirection.LeftToRight,
             AutoScroll = true,
             Padding = new Padding(20)
@@ -30,7 +28,6 @@ public partial class StatsPage : UserControl
             Text = "Export en PDF",
             Width = 100,
             Height = 20,
-            Location = new Point(10, 10),
             BackColor = Color.FromArgb(0, 255, 0),
             ForeColor = Color.White,
             Font = new Font("Segoe UI", 10, FontStyle.Bold),
@@ -41,6 +38,7 @@ public partial class StatsPage : UserControl
         layout.Controls.Add(CreateChart_Repartition());
         layout.Controls.Add(CreateChart_Contexte());
         layout.Controls.Add(CreateChart_Interventions());
+        layout.Controls.Add(btnExport);
 
         this.Controls.Add(layout);
     }
@@ -125,9 +123,9 @@ public partial class StatsPage : UserControl
 
         foreach (var entry in data)
         {
-            if (entry.Value > 0) // Filtrer les données inutiles
+            if (entry.Value > 0 && _propertyToLabel.TryGetValue(entry.Key, out var label))
             {
-                labels.Add(entry.Key);
+                labels.Add(label); // Utiliser le label traduit
                 values.Add(entry.Value);
             }
         }
@@ -136,7 +134,6 @@ public partial class StatsPage : UserControl
         {
             Width = 450,
             Height = 600,
-            Padding = new Padding(10),
             ChartType = ChartType.Pie,
             BackColor = Color.LightBlue,
             Labels = labels.ToArray()
@@ -152,7 +149,6 @@ public partial class StatsPage : UserControl
         chart.DataSets.Add(dataSet);
         return chart;
     }
-
 
     public static class ChartColorHelper
     {
@@ -179,4 +175,26 @@ public partial class StatsPage : UserControl
     {
         AlertBox.Show("Export du document en PDF à venir.");
     }
+
+    private readonly Dictionary<string, string> _propertyToLabel = new Dictionary<string, string>()
+{
+    { "addictive_behaviors", "Conduites addictives" },
+    { "critical_incident", "Incident critique" },
+    { "student_conflict", "Conflit entre élèves" },
+    { "incivility_violence", "Incivilités / Violences" },
+    { "grief", "Deuil" },
+    { "unhappiness", "Mal-être" },
+    { "learning_difficulties", "Difficultés Apprentissage" },
+    { "career_guidance_issues", "Question orientation professionnelle" },
+    { "family_difficulties", "Difficultés familiales" },
+    { "stress", "Stress" },
+    { "financial_difficulties", "Difficultés financières" },
+    { "suspected_abuse", "Suspicion maltraitance" },
+    { "discrimination", "Discrimination" },
+    { "difficulties_tensions_with_a_teacher", "Difficutés / tensions avec un∙e enseignant∙e" },
+    { "harassment_intimidation", "Harcèlement / Intimidation" },
+    { "gender_sexual_orientation", "Genre - orientation sexuelle et affective" },
+    { "other", "Autre" }
+};
+
 }
