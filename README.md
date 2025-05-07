@@ -7,7 +7,7 @@ L’objectif est de proposer un espace simple, sécurisé et centralisé pour le
 
 ## 🌐 Accès à l'application
 
-L’outil est accessible uniquement via le site principal de l’établissement.  
+L’outil est accessible uniquement via le site principal.  
 Il n’est **pas destiné à un usage externe** ou à une installation autonome.
 
 ---
@@ -25,7 +25,7 @@ Il n’est **pas destiné à un usage externe** ou à une installation autonome.
 ## 💻 Technologies utilisées
 
 - [Wisej.NET](https://wisej.com/) – Framework Web C# basé sur WinForms
-- C# 10 / .NET 6+
+- C# 7.2 / .NET 9
 - GitHub pour le suivi du projet
 
 ---
