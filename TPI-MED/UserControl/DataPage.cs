@@ -52,6 +52,9 @@ public partial class DataPage : UserControl
 
         foreach (var evt in events)
         {
+            if(!DateHelper.EstDansAnneeScolaireCourante(evt.Date))
+                continue;
+
             int duree = 0;
             string motivations = "";
 
@@ -178,11 +181,11 @@ public partial class DataPage : UserControl
         dataGrid.Columns["Type"].DisplayIndex = 3;
 
         dataGrid.Columns["Sujet"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        dataGrid.Columns["Sujet"].Width = 150;
+        dataGrid.Columns["Sujet"].Width = 100;
         dataGrid.Columns["Sujet"].DisplayIndex = 4;
 
         dataGrid.Columns["Personnes"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        dataGrid.Columns["Personnes"].Width = 150;
+        dataGrid.Columns["Personnes"].Width = 100;
         dataGrid.Columns["Personnes"].DisplayIndex = 5;
 
         dataGrid.Columns["Motivations"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -197,8 +200,8 @@ public partial class DataPage : UserControl
         dataGrid.Columns["Delete"].Width = 50;
         dataGrid.Columns["Delete"].HeaderText = "";
 
-        dataGrid.Columns["Sujet"].MinimumWidth = 120;
-        dataGrid.Columns["Personnes"].MinimumWidth = 120;
+        dataGrid.Columns["Sujet"].MinimumWidth = 50;
+        dataGrid.Columns["Personnes"].MinimumWidth = 50;
         dataGrid.Columns["Motivations"].MinimumWidth = 250;
 
         dataGrid.Columns["Duree"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
