@@ -18,15 +18,7 @@ public partial class AccueilPage : UserControl
         // Titre de bienvenue
         var title = new Label()
         {
-            Text = "Bienvenue sur l'application\nJournal de médiation !",
-            Dock = DockStyle.Fill,
-            TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        };
-
-        // Affichage de la date actuelle
-        var label = new Label()
-        {
-            Text = "Bonjour, nous sommes le " + DateTime.Now.ToString("d"),
+            Text = $"Bienvenue {Application.Session["userName"]} sur l'application\nJournal de médiation !\nNous sommes le {DateTime.Now.ToString("d")}",
             Dock = DockStyle.Fill,
             TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         };
