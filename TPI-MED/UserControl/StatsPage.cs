@@ -3,13 +3,16 @@ using Wisej.Web.Ext.ChartJS;
 using System.Drawing;
 using System.Collections.Generic;
 using System;
+using System.Linq;
+using System.Drawing.Imaging;
 
 /// <summary>
 /// Représente une page affichant des statistiques sous forme de graphiques.
 /// </summary>
 public partial class StatsPage : UserControl
 {
-    private FlowLayoutPanel panelTop;
+    private ComboBox dropdown;
+    private FlowLayoutPanel panelCharts;
 
     /// <summary>
     /// Initialise une nouvelle instance de la classe <see cref="StatsPage"/>.
@@ -26,28 +29,44 @@ public partial class StatsPage : UserControl
     private void CreateAllCharts()
     {
         // Panel du bouton export en haut
-        var panelBouton = new Panel
+        var panelBouton = new FlowLayoutPanel
         {
             Dock = DockStyle.Top,
             Height = 50,
             Padding = new Padding(10),
+            FlowDirection = FlowDirection.LeftToRight,
+            AutoSize = true
         };
 
         var btnExport = new Button
         {
             Text = "Export en PDF",
             Width = 140,
-            Height = 30,
+            Height = 50,
             BackColor = Color.FromArgb(0, 122, 204),
             ForeColor = Color.White,
             Font = new Font("Segoe UI", 10, FontStyle.Bold),
-            Anchor = AnchorStyles.Left
+            Dock = DockStyle.Left,
         };
         btnExport.Click += btnExport_Click;
         panelBouton.Controls.Add(btnExport);
 
+        dropdown = new ComboBox
+        {
+            Width = 140,
+            Height = 50,
+            BackColor = Color.FromArgb(0, 122, 204),
+            ForeColor = Color.White,
+            Font = new Font("Segoe UI", 10, FontStyle.Bold),
+            Dock = DockStyle.Left,
+            Margin = new Padding(10, 0, 0, 0),
+            DropDownStyle = ComboBoxStyle.DropDownList
+        };
+        dropdown.SelectedIndexChanged += dropdownSelection_Changed;
+        panelBouton.Controls.Add(dropdown);
+
         // Conteneur scrollable horizontal pour les charts
-        var panelCharts = new FlowLayoutPanel
+        panelCharts = new FlowLayoutPanel
         {
             Dock = DockStyle.Fill,
             FlowDirection = FlowDirection.LeftToRight,
@@ -56,9 +75,13 @@ public partial class StatsPage : UserControl
             Padding = new Padding(20),
         };
 
-        panelCharts.Controls.Add(CreateChart_Repartition());
-        panelCharts.Controls.Add(CreateChart_Contexte());
-        panelCharts.Controls.Add(CreateChart_Interventions());
+        LoadAnneeScolaire();
+
+        string anneeSelectionnee = dropdown.SelectedItem?.ToString() ?? "2024-2025"; // valeur par défaut
+
+        panelCharts.Controls.Add(CreateChart_Repartition(anneeSelectionnee));
+        panelCharts.Controls.Add(CreateChart_Contexte(anneeSelectionnee));
+        panelCharts.Controls.Add(CreateChart_Interventions(anneeSelectionnee));
 
         // Layout principal (vertical)
         var layoutPrincipal = new TableLayoutPanel
@@ -72,16 +95,53 @@ public partial class StatsPage : UserControl
         layoutPrincipal.Controls.Add(panelCharts, 0, 1);
 
         this.Controls.Add(layoutPrincipal);
+
+
+    }
+
+    private void LoadAnneeScolaire()
+    {
+        // Récupérer les années disponibles depuis EventDAO
+        var eventDAO = new EventDAO();
+        int userId = (int)Application.Session["userId"];
+        var annees = eventDAO.GetAvailableYears(userId);
+
+        // Ajouter les années au dropdown
+        dropdown.Items.Clear();
+        foreach (var annee in annees)
+        {
+            dropdown.Items.Add($"{annee}-{annee + 1}");
+        }
+
+        //if(dropdown.Items.Count <= 0)
+        //{
+        //    MessageBox.Show("Aucune année scolaire disponible.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    return;
+        //}
+
+        foreach (var annee in annees)
+        {
+            AlertBox.Show($"Année trouvée : {annee}");
+            dropdown.Items.Add(annee);
+        }
+
+        // Sélectionner la première année par défaut
+        if (dropdown.Items.Count > 0)
+        {
+            dropdown.SelectedIndex = 0;
+        }
     }
 
     /// <summary>
     /// Crée un graphique en camembert représentant la répartition du travail.
     /// </summary>
     /// <returns>Un objet <see cref="ChartJS"/> représentant le graphique.</returns>
-    private ChartJS CreateChart_Repartition()
+    private ChartJS CreateChart_Repartition(string anneeScolaire)
     {
         int userId = (int)Application.Session["userId"];
-        var data = new SeanceDAO().GetDureeTotaleParType(userId);
+        var (start, end) = DateHelper.GetPlageAnneeScolaire(anneeScolaire);
+        var data = new SeanceDAO().GetDureeTotaleParType(userId, start, end);
+
 
         var labels = new List<string>();
         var values = new List<object>();
@@ -117,10 +177,11 @@ public partial class StatsPage : UserControl
     /// Crée un graphique en camembert représentant le contexte des entretiens.
     /// </summary>
     /// <returns>Un objet <see cref="ChartJS"/> représentant le graphique.</returns>
-    private ChartJS CreateChart_Contexte()
+    private ChartJS CreateChart_Contexte(string anneeScolaire)
     {
         int userId = (int)Application.Session["userId"];
-        var data = new InterviewDAO().GetDureeParType(userId);
+        var (start, end) = DateHelper.GetPlageAnneeScolaire(anneeScolaire);
+        var data = new SeanceDAO().GetDureeTotaleParType(userId, start, end);
 
         var labels = new List<string>();
         var values = new List<object>();
@@ -156,10 +217,11 @@ public partial class StatsPage : UserControl
     /// Crée un graphique en camembert représentant les types d'interventions.
     /// </summary>
     /// <returns>Un objet <see cref="ChartJS"/> représentant le graphique.</returns>
-    private ChartJS CreateChart_Interventions()
+    private ChartJS CreateChart_Interventions(string anneeScolaire)
     {
         int userId = (int)Application.Session["userId"];
-        var data = new InterviewDAO().GetStatsMotivations(userId);
+        var (start, end) = DateHelper.GetPlageAnneeScolaire(anneeScolaire);
+        var data = new SeanceDAO().GetDureeTotaleParType(userId, start, end);
 
         var labels = new List<string>();
         var values = new List<object>();
@@ -231,6 +293,27 @@ public partial class StatsPage : UserControl
     {
         AlertBox.Show("Export du document en PDF à venir.");
     }
+
+    private void dropdownSelection_Changed(object sender, EventArgs e)
+    {
+        if (dropdown.SelectedItem == null)
+            return;
+
+        string anneeSelectionnee = dropdown.SelectedItem.ToString();
+        int userId = (int)Application.Session["userId"];
+
+        // Trouve le FlowLayoutPanel contenant les charts
+        if (panelCharts == null)
+            return;
+
+        panelCharts.Controls.Clear(); // Supprimer les anciens graphiques
+
+        // --- Crée et ajoute les nouveaux charts filtrés par année ---
+        panelCharts.Controls.Add(CreateChart_Repartition(anneeSelectionnee));
+        panelCharts.Controls.Add(CreateChart_Contexte(anneeSelectionnee));
+        panelCharts.Controls.Add(CreateChart_Interventions(anneeSelectionnee));
+    }
+
 
     /// <summary>
     /// Dictionnaire associant les propriétés des motivations aux libellés lisibles.

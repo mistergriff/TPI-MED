@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 /// <summary>
 /// Fournit des méthodes pour gérer les événements dans la base de données.
@@ -105,6 +106,58 @@ public class EventDAO
             }
         }
         return null;
+    }
+
+    /// <summary>
+    /// Récupère les années scolaires disponibles en fonction des événements existants.
+    /// </summary>
+    /// <returns>Une liste des années scolaires disponibles (ex. : "2024-2025").</returns>
+    public List<string> GetAvailableYears(int id)
+    {
+        var result = new HashSet<string>();
+
+        // Récupérer tous les événements
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+            string sql = "SELECT date FROM events WHERE id = @id";
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        // Calculer l'année scolaire à partir de la date
+                        var eventDate = reader.GetDateTime("date");
+                        string anneeScolaire = GetAnneeScolaire(eventDate);
+                        result.Add(anneeScolaire);
+                    }
+                }
+            }
+        }
+
+        // Retourner les années triées
+        var sortedYears = new List<string>(result);
+        sortedYears.Sort();
+        return sortedYears;
+    }
+
+    /// <summary>
+    /// Calcule l'année scolaire à partir d'une date donnée.
+    /// </summary>
+    /// <param name="date">La date de l'événement.</param>
+    /// <returns>L'année scolaire correspondante (ex. : "2024-2025").</returns>
+    private string GetAnneeScolaire(DateTime date)
+    {
+        if (date.Month >= 8) // Si le mois est août ou plus tard
+        {
+            return $"{date.Year}-{date.Year + 1}";
+        }
+        else // Si le mois est avant août
+        {
+            return $"{date.Year - 1}-{date.Year}";
+        }
     }
 
     /// <summary>

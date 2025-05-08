@@ -111,37 +111,37 @@ public class SeanceDAO
     /// </summary>
     /// <param name="userId">L'identifiant de l'utilisateur.</param>
     /// <returns>Un dictionnaire contenant les types de séances et leur durée totale.</returns>
-    public Dictionary<string, int> GetDureeTotaleParType(int userId)
+    public Dictionary<string, int> GetDureeTotaleParType(int userId, DateTime start, DateTime end)
     {
         var result = new Dictionary<string, int>();
-
         using (var conn = Database.GetConnection())
         {
             conn.Open();
             string sql = @"
-            SELECT st.name, SUM(ehst.time) AS total
+            SELECT st.name AS label, SUM(ehst.time) AS total
             FROM events_have_sessions_type ehst
-            JOIN sessions_types st ON ehst.sessions_types_id = st.id
+            JOIN sessions_types st ON st.id = ehst.sessions_types_id
             JOIN events e ON e.id = ehst.events_id
             WHERE e.users_id = @userId
-            GROUP BY st.name
-        ";
+              AND e.date BETWEEN @start AND @end
+            GROUP BY st.name";
 
             using (var cmd = new MySqlCommand(sql, conn))
             {
                 cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@start", start);
+                cmd.Parameters.AddWithValue("@end", end);
+
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        var name = reader.GetString("name");
-                        var total = reader.GetInt32("total");
-                        result[name] = total;
+                        result.Add(reader.GetString("label"), reader.GetInt32("total"));
                     }
                 }
             }
         }
-
         return result;
     }
+
 }
