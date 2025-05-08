@@ -29,7 +29,6 @@
     /// </summary>
     private void InitializeComponent()
     {
-        this.AutoScaleMode = Wisej.Web.AutoScaleMode.Font;
     }
 
     #endregion

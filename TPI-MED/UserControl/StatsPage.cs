@@ -9,6 +9,8 @@ using System;
 /// </summary>
 public partial class StatsPage : UserControl
 {
+    private FlowLayoutPanel panelTop;
+
     /// <summary>
     /// Initialise une nouvelle instance de la classe <see cref="StatsPage"/>.
     /// </summary>
@@ -23,35 +25,53 @@ public partial class StatsPage : UserControl
     /// </summary>
     private void CreateAllCharts()
     {
-        // Crée un conteneur horizontal pour les graphiques
-        var layout = new FlowLayoutPanel
+        // Panel du bouton export en haut
+        var panelBouton = new Panel
         {
-            Dock = DockStyle.Fill,
-            FlowDirection = FlowDirection.LeftToRight,
-            AutoScroll = true,
-            Padding = new Padding(20)
+            Dock = DockStyle.Top,
+            Height = 50,
+            Padding = new Padding(10),
         };
 
-        // Bouton pour exporter les graphiques en PDF
         var btnExport = new Button
         {
             Text = "Export en PDF",
-            Width = 100,
-            Height = 20,
-            BackColor = Color.FromArgb(0, 255, 0),
+            Width = 140,
+            Height = 30,
+            BackColor = Color.FromArgb(0, 122, 204),
             ForeColor = Color.White,
             Font = new Font("Segoe UI", 10, FontStyle.Bold),
-            TextAlign = ContentAlignment.MiddleCenter
+            Anchor = AnchorStyles.Left
         };
         btnExport.Click += btnExport_Click;
+        panelBouton.Controls.Add(btnExport);
 
-        // Ajout des graphiques et du bouton au conteneur
-        layout.Controls.Add(CreateChart_Repartition());
-        layout.Controls.Add(CreateChart_Contexte());
-        layout.Controls.Add(CreateChart_Interventions());
-        layout.Controls.Add(btnExport);
+        // Conteneur scrollable horizontal pour les charts
+        var panelCharts = new FlowLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            FlowDirection = FlowDirection.LeftToRight,
+            WrapContents = false,
+            AutoScroll = true,
+            Padding = new Padding(20),
+        };
 
-        this.Controls.Add(layout);
+        panelCharts.Controls.Add(CreateChart_Repartition());
+        panelCharts.Controls.Add(CreateChart_Contexte());
+        panelCharts.Controls.Add(CreateChart_Interventions());
+
+        // Layout principal (vertical)
+        var layoutPrincipal = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            RowCount = 2
+        };
+        layoutPrincipal.RowStyles.Add(new RowStyle(SizeType.AutoSize));       // Pour le bouton
+        layoutPrincipal.RowStyles.Add(new RowStyle(SizeType.Percent, 100));   // Pour les charts
+        layoutPrincipal.Controls.Add(panelBouton, 0, 0);
+        layoutPrincipal.Controls.Add(panelCharts, 0, 1);
+
+        this.Controls.Add(layoutPrincipal);
     }
 
     /// <summary>
