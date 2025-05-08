@@ -83,6 +83,13 @@ public partial class NewEntryForm : Form
         var dureeAdmin = (int)numDuree.Value;
         var type = tabType.SelectedTab.Text;
 
+        if (!DateHelper.EstDansAnneeScolaireCourante(date))
+        {
+            datePicker.Value = DateTime.Today;
+            AlertBox.Show("La date doit être comprise dans l'année scolaire courante.", MessageBoxIcon.Error);
+            return;
+        }
+
         if (string.IsNullOrEmpty(sujet))
         {
             AlertBox.Show("Veuillez entrer un sujet.", MessageBoxIcon.Warning);
@@ -102,13 +109,13 @@ public partial class NewEntryForm : Form
 
         if (type == "Entretien")
         {
-            string radioButtonSelection = selectedRadioButton.Text;
-
-            if (string.IsNullOrEmpty(radioButtonSelection))
+            if(selectedRadioButton == "")
             {
                 AlertBox.Show("Veuillez sélectionner un type d'entretien.", MessageBoxIcon.Warning);
                 return;
             }
+
+            string radioButtonSelection = selectedRadioButton;
 
             // Déterminer l'ID du type d'entretien en fonction de la sélection
             int interviewTypeId;
@@ -200,22 +207,22 @@ public partial class NewEntryForm : Form
         {
             var seances = new List<Seance>();
 
-            void TryAddSeance(string texte, int sessionTypeId)
+            void TryAddSeance(int temps, int sessionTypeId)
             {
-                if (int.TryParse(texte, out int t) && t > 0)
+                if (temps >= 0)
                 {
-                    seances.Add(new Seance() { TypeId = sessionTypeId, Temps = t });
+                    seances.Add(new Seance() { TypeId = sessionTypeId, Temps = temps });
                 }
             }
 
-            TryAddSeance(txtDirection.Text, 1);
-            TryAddSeance(txtEnseignant.Text, 2);
-            TryAddSeance(txtEquipePSPS.Text, 3);
-            TryAddSeance(txtProjets.Text, 4);
-            TryAddSeance(txtGroupeMPP.Text, 5);
-            TryAddSeance(txtReseauAvecParents.Text, 6);
-            TryAddSeance(txtEquipePluriReseau.Text, 7);
-            TryAddSeance(txtAutre.Text, 8);
+            TryAddSeance((int)txtDirection.Value, 1);
+            TryAddSeance((int)txtEnseignant.Value, 2);
+            TryAddSeance((int)txtEquipePSPS.Value, 3);
+            TryAddSeance((int)txtProjets.Value, 4);
+            TryAddSeance((int)txtGroupeMPP.Value, 5);
+            TryAddSeance((int)txtReseauAvecParents.Value, 6);
+            TryAddSeance((int)txtEquipePluriReseau.Value, 7);
+            TryAddSeance((int)txtAutre.Value, 8);
 
             if (seances.Count == 0)
             {
