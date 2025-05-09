@@ -120,7 +120,7 @@ public class EventDAO
         using (var conn = Database.GetConnection())
         {
             conn.Open();
-            string sql = "SELECT date FROM events WHERE id = @id";
+            string sql = "SELECT date FROM events WHERE users_id = @id";
             using (var cmd = new MySqlCommand(sql, conn))
             {
                 cmd.Parameters.AddWithValue("@id", id);

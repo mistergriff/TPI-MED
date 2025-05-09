@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -168,7 +169,7 @@ public class InterviewDAO
     /// </summary>
     /// <param name="userId">L'identifiant de l'utilisateur.</param>
     /// <returns>Un dictionnaire contenant les types d'entretiens et leur durée totale.</returns>
-    public Dictionary<string, int> GetDureeParType(int userId)
+    public Dictionary<string, int> GetDureeParType(int userId, DateTime start, DateTime end)
     {
         var result = new Dictionary<string, int>();
 
@@ -182,18 +183,21 @@ public class InterviewDAO
             JOIN events e ON e.interviews_id = i.id
             JOIN interviews_types it ON it.id = i.interviews_types_id
             WHERE e.users_id = @userId
+              AND e.date BETWEEN @start AND @end
             GROUP BY it.name";
 
             using (var cmd = new MySqlCommand(sql, conn))
             {
                 cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@start", start);
+                cmd.Parameters.AddWithValue("@end", end);
 
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         string label = reader.GetString("name");
-                        int duree = reader.GetInt32("Duree");
+                        int duree = reader.GetInt32("duree");
 
                         result[label] = duree;
                     }
@@ -209,32 +213,33 @@ public class InterviewDAO
     /// </summary>
     /// <param name="userId">L'identifiant de l'utilisateur.</param>
     /// <returns>Un dictionnaire contenant les motivations et leur somme.</returns>
-    public Dictionary<string, int> GetStatsMotivations(int userId)
+    public Dictionary<string, int> GetStatsMotivations(int userId, DateTime start, DateTime end)
     {
         var motivations = new Dictionary<string, int>
-        {
-            { "addictive_behaviors", 0 },
-            { "critical_incident", 0 },
-            { "student_conflict", 0 },
-            { "incivility_violence", 0 },
-            { "grief", 0 },
-            { "unhappiness", 0 },
-            { "learning_difficulties", 0 },
-            { "career_guidance_issues", 0 },
-            { "family_difficulties", 0 },
-            { "stress", 0 },
-            { "financial_difficulties", 0 },
-            { "suspected_abuse", 0 },
-            { "discrimination", 0 },
-            { "difficulties_tensions_with_a_teacher", 0 },
-            { "harassment_intimidation", 0 },
-            { "gender_sexual_orientation", 0 },
-            { "other", 0 }
-        };
+    {
+        { "addictive_behaviors", 0 },
+        { "critical_incident", 0 },
+        { "student_conflict", 0 },
+        { "incivility_violence", 0 },
+        { "grief", 0 },
+        { "unhappiness", 0 },
+        { "learning_difficulties", 0 },
+        { "career_guidance_issues", 0 },
+        { "family_difficulties", 0 },
+        { "stress", 0 },
+        { "financial_difficulties", 0 },
+        { "suspected_abuse", 0 },
+        { "discrimination", 0 },
+        { "difficulties_tensions_with_a_teacher", 0 },
+        { "harassment_intimidation", 0 },
+        { "gender_sexual_orientation", 0 },
+        { "other", 0 }
+    };
 
         using (var conn = Database.GetConnection())
         {
             conn.Open();
+
             string sql = @"
             SELECT 
                 SUM(addictive_behaviors) as addictive_behaviors,
@@ -256,11 +261,15 @@ public class InterviewDAO
                 SUM(other) as other
             FROM interviews i
             JOIN events e ON e.interviews_id = i.id
-            WHERE e.users_id = @userId";
+            WHERE e.users_id = @userId
+              AND e.date BETWEEN @start AND @end";
 
             using (var cmd = new MySqlCommand(sql, conn))
             {
                 cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@start", start);
+                cmd.Parameters.AddWithValue("@end", end);
+
                 using (var reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
@@ -273,6 +282,7 @@ public class InterviewDAO
                 }
             }
         }
+
         return motivations;
     }
 }

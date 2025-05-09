@@ -62,7 +62,6 @@ public partial class StatsPage : UserControl
             Margin = new Padding(10, 0, 0, 0),
             DropDownStyle = ComboBoxStyle.DropDownList
         };
-        dropdown.SelectedIndexChanged += dropdownSelection_Changed;
         panelBouton.Controls.Add(dropdown);
 
         // Conteneur scrollable horizontal pour les charts
@@ -77,7 +76,15 @@ public partial class StatsPage : UserControl
 
         LoadAnneeScolaire();
 
-        string anneeSelectionnee = dropdown.SelectedItem?.ToString() ?? "2024-2025"; // valeur par défaut
+        dropdown.SelectedIndexChanged += dropdownSelection_Changed; // après le load des années pour éviter le double ajout des charts.
+
+        string anneeSelectionnee = dropdown.SelectedItem.ToString();
+
+        if(string.IsNullOrEmpty(anneeSelectionnee))
+        {
+            MessageBox.Show("Aucune année scolaire disponible.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
 
         panelCharts.Controls.Add(CreateChart_Repartition(anneeSelectionnee));
         panelCharts.Controls.Add(CreateChart_Contexte(anneeSelectionnee));
@@ -95,8 +102,6 @@ public partial class StatsPage : UserControl
         layoutPrincipal.Controls.Add(panelCharts, 0, 1);
 
         this.Controls.Add(layoutPrincipal);
-
-
     }
 
     private void LoadAnneeScolaire()
@@ -110,25 +115,20 @@ public partial class StatsPage : UserControl
         dropdown.Items.Clear();
         foreach (var annee in annees)
         {
-            dropdown.Items.Add($"{annee}-{annee + 1}");
+            AlertBox.Show($"Année trouvée : {annee}"); // Debug
+            dropdown.Items.Add($"{annee}");
         }
 
-        //if(dropdown.Items.Count <= 0)
-        //{
-        //    MessageBox.Show("Aucune année scolaire disponible.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    return;
-        //}
-
-        foreach (var annee in annees)
+        if (dropdown.Items.Count <= 0)
         {
-            AlertBox.Show($"Année trouvée : {annee}");
-            dropdown.Items.Add(annee);
+            MessageBox.Show("Aucune année scolaire disponible.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
         }
 
         // Sélectionner la première année par défaut
         if (dropdown.Items.Count > 0)
         {
-            dropdown.SelectedIndex = 0;
+            dropdown.SelectedIndex = dropdown.Items.Count - 1; // Sélectionner la première années
         }
     }
 
@@ -155,6 +155,7 @@ public partial class StatsPage : UserControl
         var chart = new ChartJS
         {
             Width = 450,
+            Text = "Répartition du travail",
             Height = 600,
             Padding = new Padding(10),
             ChartType = ChartType.Pie,
@@ -181,7 +182,7 @@ public partial class StatsPage : UserControl
     {
         int userId = (int)Application.Session["userId"];
         var (start, end) = DateHelper.GetPlageAnneeScolaire(anneeScolaire);
-        var data = new SeanceDAO().GetDureeTotaleParType(userId, start, end);
+        var data = new InterviewDAO().GetDureeParType(userId, start, end);
 
         var labels = new List<string>();
         var values = new List<object>();
@@ -196,6 +197,7 @@ public partial class StatsPage : UserControl
         {
             Width = 450,
             Height = 600,
+            Text = "Contexte",
             Padding = new Padding(10),
             ChartType = ChartType.Pie,
             BackColor = Color.LightBlue,
@@ -221,7 +223,7 @@ public partial class StatsPage : UserControl
     {
         int userId = (int)Application.Session["userId"];
         var (start, end) = DateHelper.GetPlageAnneeScolaire(anneeScolaire);
-        var data = new SeanceDAO().GetDureeTotaleParType(userId, start, end);
+        var data = new InterviewDAO().GetStatsMotivations(userId, start, end);
 
         var labels = new List<string>();
         var values = new List<object>();
@@ -239,6 +241,7 @@ public partial class StatsPage : UserControl
         {
             Width = 450,
             Height = 600,
+            Text = "Types d'interventions",
             ChartType = ChartType.Pie,
             BackColor = Color.LightBlue,
             Labels = labels.ToArray()
