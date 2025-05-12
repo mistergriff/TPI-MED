@@ -1,4 +1,11 @@
-﻿using MySql.Data.MySqlClient;
+﻿//////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                      //
+//      Date de création: 09.04.2025                                //
+//      Description: Classe de gestion des utilisateurs avec la DB  //
+//      Date de dernière révision: 12.05.2025                       //
+//////////////////////////////////////////////////////////////////////
+
+using MySql.Data.MySqlClient;
 using System;
 using System.Diagnostics;
 
@@ -44,6 +51,24 @@ public class UtilisateurDAO
             }
         }
     }
+
+    public bool ExisteNomOuEmail(string nom, string email)
+    {
+        using (var conn = Database.GetConnection())
+        {
+            conn.Open();
+            string sql = "SELECT COUNT(*) FROM users WHERE name = @nom OR mail = @mail";
+            using (var cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@nom", nom);
+                cmd.Parameters.AddWithValue("@mail", email);
+
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+        }
+    }
+
 
     /// <summary>
     /// Récupère un utilisateur par son nom ou son adresse e-mail.

@@ -1,4 +1,12 @@
-﻿using MySql.Data.MySqlClient;
+﻿//////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                      //
+//      Date de création: 09.04.2025                                //
+//      Description: Classe de gestion de la base de données MySQL  //
+//      Date de dernière révision: 12.05.2025                       //
+//////////////////////////////////////////////////////////////////////
+
+
+using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Configuration;
 using TPI_MED;
 

@@ -1,4 +1,11 @@
-﻿using Wisej.Web;
+﻿///////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                       //
+//      Date de création: 29.04.2025                                 //
+//      Description: UserControl qui affiche la page de statistiques //
+//      Date de dernière révision: 12.05.2025                        //
+///////////////////////////////////////////////////////////////////////
+
+using Wisej.Web;
 using Wisej.Web.Ext.ChartJS;
 using System.Drawing;
 using System.Collections.Generic;

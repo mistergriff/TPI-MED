@@ -1,4 +1,11 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                      //
+//      Date de création: 29.04.2025                                //
+//      Description: UserControl qui affiche la page d'accueil      //
+//      Date de dernière révision: 12.05.2025                       //
+//////////////////////////////////////////////////////////////////////
+
+using System;
 using Wisej.Web;
 
 /// <summary>
@@ -23,51 +30,7 @@ public partial class AccueilPage : UserControl
             TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         };
 
-        // Bouton pour accéder aux entrées
-        var dataButton = new Button()
-        {
-            Text = "Accès aux entrées",
-            Dock = DockStyle.Bottom,
-            Height = 50
-        };
-
-        // Bouton pour accéder aux statistiques
-        var statsButton = new Button()
-        {
-            Text = "Accès aux statistiques",
-            Dock = DockStyle.Bottom,
-            Height = 50
-        };
-
         // Ajout des contrôles à la page
-        this.Controls.AddRange(new Control[] {
-            title,
-            dataButton,
-            statsButton
-        });
-
-        // Gestion des événements de clic
-        dataButton.Click += DataButton_Click;
-        statsButton.Click += StatsButton_Click;
-    }
-
-    /// <summary>
-    /// Gère l'événement de clic sur le bouton "Accès aux statistiques".
-    /// </summary>
-    /// <param name="sender">L'objet source de l'événement.</param>
-    /// <param name="e">Les données d'événement associées.</param>
-    private void StatsButton_Click(object sender, EventArgs e)
-    {
-        // Logique pour accéder aux statistiques (à implémenter)
-    }
-
-    /// <summary>
-    /// Gère l'événement de clic sur le bouton "Accès aux entrées".
-    /// </summary>
-    /// <param name="sender">L'objet source de l'événement.</param>
-    /// <param name="e">Les données d'événement associées.</param>
-    private void DataButton_Click(object sender, EventArgs e)
-    {
-        // Logique pour accéder aux entrées (à implémenter)
+        this.Controls.Add(title);
     }
 }

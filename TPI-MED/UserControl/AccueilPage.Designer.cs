@@ -1,4 +1,11 @@
-﻿partial class AccueilPage
+﻿//////////////////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                                  //
+//      Date de création: 29.04.2025                                            //
+//      Description: Designer du UserControl qui affiche la page d'accueil      //
+//      Date de dernière révision: 12.05.2025                                   //
+//////////////////////////////////////////////////////////////////////////////////
+
+partial class AccueilPage
 {
     /// <summary> 
     /// Required designer variable.

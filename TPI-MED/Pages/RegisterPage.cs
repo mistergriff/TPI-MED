@@ -1,4 +1,11 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                      //
+//      Date de création: 09.04.2025                                //
+//      Description: Page d'enregistrement d'un nouvel utilisateur  //
+//      Date de dernière révision: 12.05.2025                       //
+//////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Linq;
 using Wisej.Web;
 
@@ -68,10 +75,13 @@ public partial class RegisterPage : Page
         };
 
         UtilisateurDAO dao = new UtilisateurDAO();
-        if (dao.CreerUtilisateur(utilisateur))
+        if (!dao.ExisteNomOuEmail(nom, email))
         {
-            MessageBox.Show("Inscription réussie,\nveuillez valider votre adresse mail !");
-            Application.MainPage = new LoginPage();
+            if (dao.CreerUtilisateur(utilisateur))
+            {
+                MessageBox.Show("Inscription réussie,\nveuillez valider votre adresse mail !");
+                Application.MainPage = new LoginPage();
+            }
         }
         else
         {
@@ -110,7 +120,7 @@ public partial class RegisterPage : Page
     /// <returns>Retourne <c>true</c> si le mot de passe est valide, sinon <c>false</c>.</returns>
     private bool IsPasswordValid(string pw)
     {
-        if (pw.Length < 8)
+        if (pw.Length <= 8)
             return false;
         if (!pw.Any(char.IsUpper))
             return false;

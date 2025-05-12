@@ -1,4 +1,11 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                                    //
+//      Date de création: 09.05.2025                                              //
+//      Description: Classe utilitaire pour le hachage et la génération de sel    //
+//      Date de dernière révision: 12.05.2025                                     //
+////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Security.Cryptography;
 using System.Text;
 

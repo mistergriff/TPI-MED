@@ -1,4 +1,11 @@
-﻿partial class StatsPage
+﻿//////////////////////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                                      //
+//      Date de création: 29.04.2025                                                //
+//      Description: Designer du UserControl qui affiche la page de statistiques    //
+//      Date de dernière révision: 12.05.2025                                       //
+//////////////////////////////////////////////////////////////////////////////////////
+
+partial class StatsPage
 {
     /// <summary> 
     /// Required designer variable.

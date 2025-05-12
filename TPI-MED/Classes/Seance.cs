@@ -1,4 +1,11 @@
-﻿/// <summary>
+﻿//////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                      //
+//      Date de création: 02.05.2025                                //
+//      Description: Classe d'obejt de type Seance                  //
+//      Date de dernière révision: 12.05.2025                       //
+//////////////////////////////////////////////////////////////////////
+
+/// <summary>
 /// Représente une séance associée à un événement dans l'application.
 /// </summary>
 public class Seance

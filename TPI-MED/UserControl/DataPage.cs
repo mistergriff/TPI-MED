@@ -1,4 +1,11 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                      //
+//      Date de création: 29.04.2025                                //
+//      Description: UserControl qui affiche la page des données    //
+//      Date de dernière révision: 12.05.2025                       //
+//////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using Wisej.Web;
 

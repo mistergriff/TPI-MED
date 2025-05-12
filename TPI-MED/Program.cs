@@ -1,3 +1,10 @@
+/////////////////////////////////////////////////////////////////////////
+//      Auteur: WiseJ                                                  //
+//      Date de création: 09.04.2025                                   //
+//      Description: Classe autogénérée par WiseJ qui contient le main //
+//      Date de dernière révision: 12.05.2025                          //
+/////////////////////////////////////////////////////////////////////////
+
 using Wisej.Web;
 using Microsoft.Extensions.Configuration;
 
@@ -44,13 +51,5 @@ namespace TPI_MED
                 Application.MainPage = new LoginPage();
             }
         }
-
-        // 
-        // Vous pouvez utiliser la méthode d'entrée ci-dessous
-        // pour recevoir les paramètres de l'URL dans la collection args.
-        //
-        // static void Main(NameValueCollection args)
-        // {
-        // }
     }
 }

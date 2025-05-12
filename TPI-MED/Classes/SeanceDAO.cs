@@ -1,4 +1,11 @@
-﻿using MySql.Data.MySqlClient;
+﻿//////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                      //
+//      Date de création: 02.05.2025                                //
+//      Description: Classe de gestion des Séances avec la DB       //
+//      Date de dernière révision: 12.05.2025                       //
+//////////////////////////////////////////////////////////////////////
+
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 

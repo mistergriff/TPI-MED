@@ -1,4 +1,11 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                                //
+//      Date de création: 09.04.2025                                          //
+//      Description: Page de validation du token après création du compte     //
+//      Date de dernière révision: 12.05.2025                                 //
+////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using Wisej.Web;
 
 /// <summary>

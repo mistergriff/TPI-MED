@@ -1,3 +1,10 @@
+//////////////////////////////////////////////////////////////////////
+//      Auteur: WiseJ                                               //
+//      Date de création: 09.04.2025                                //
+//      Description: Classe autogénérée par Wisej                   //
+//      Date de dernière révision: 12.05.2025                       //
+//////////////////////////////////////////////////////////////////////
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Wisej.Core;

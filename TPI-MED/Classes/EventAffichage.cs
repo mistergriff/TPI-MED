@@ -1,4 +1,12 @@
-﻿/// <summary>
+﻿///////////////////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                                   //
+//      Date de création: 05.05.2025                                             //
+//      Description: Classe de gestion des évènement formaté pour l'affichage    //
+//      Date de dernière révision: 12.05.2025                                    //
+///////////////////////////////////////////////////////////////////////////////////
+
+
+/// <summary>
 /// Représente un événement formaté pour l'affichage dans l'application.
 /// </summary>
 public class EventAffichage

@@ -1,4 +1,11 @@
-﻿using System;
+﻿///////////////////////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                                       //
+//      Date de création: 29.04.2025                                                 //
+//      Description: Designer du formulaire pour entrer et modifier des évènements   //
+//      Date de dernière révision: 12.05.2025                                        //
+///////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Wisej.Web;

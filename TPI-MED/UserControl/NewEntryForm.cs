@@ -1,4 +1,11 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                          //
+//      Date de création: 29.04.2025                                    //
+//      Description: Formulaire d'ajout et de modification d'évènement  //
+//      Date de dernière révision: 12.05.2025                           //
+//////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using Wisej.Web;
 
@@ -209,7 +216,7 @@ public partial class NewEntryForm : Form
 
             void TryAddSeance(int temps, int sessionTypeId)
             {
-                if (temps >= 0)
+                if (temps > 0)
                 {
                     seances.Add(new Seance() { TypeId = sessionTypeId, Temps = temps });
                 }

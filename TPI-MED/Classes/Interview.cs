@@ -1,4 +1,11 @@
-﻿/// <summary>
+﻿////////////////////////////////////////////////////////////////////////////
+//      Auteur: Renaud Grégory                                            //
+//      Date de création: 02.05.2025                                      //
+//      Description: Classe d'objet de type Interview pour l'application  //
+//      Date de dernière révision: 12.05.2025                             //
+////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
 /// Représente un entretien dans l'application.
 /// </summary>
 public class Interview
