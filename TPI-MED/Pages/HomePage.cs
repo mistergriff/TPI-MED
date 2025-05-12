@@ -142,8 +142,12 @@ public partial class HomePage : Page
             case "Déconnexion":
                 if (MessageBox.Show("Voulez vous vous déconnecter du compte ?", buttons: MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
+                    // Suppression des informations de session
+                    Application.Session["userName"] = null;
+                    Application.Session["userId"] = null;
+
+                    // Redirection vers la page de connexion
                     Application.MainPage = new LoginPage();
-                    //SessionUtilisateur.NomUtilisateur = null;
                     AlertBox.Show("Compte déconnecté avec succès.", icon: MessageBoxIcon.Question, autoCloseDelay: 10000, showProgressBar: true, showCloseButton: true);
                     break;
                 }
