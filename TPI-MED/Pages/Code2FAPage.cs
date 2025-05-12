@@ -62,7 +62,7 @@ public partial class Code2FAPage : Page
             Application.Session["userName"] = utilisateur.Nom;
 
             // Invalide le code 2FA dans la base de données.
-            dao.InvaliderCode2FA(_utilisateurId);
+            dao.Invalidate2FACode(_utilisateurId);
 
             // Redirige l'utilisateur vers la page d'accueil après un délai.
             Timer delay = new Timer() { Interval = 1000 };

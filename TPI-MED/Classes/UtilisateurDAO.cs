@@ -19,7 +19,7 @@ public class UtilisateurDAO
     /// </summary>
     /// <param name="user">L'utilisateur à créer.</param>
     /// <returns>Retourne <c>true</c> si l'utilisateur a été créé avec succès, sinon <c>false</c>.</returns>
-    public bool CreerUtilisateur(Utilisateur user)
+    public bool CreateUser(Utilisateur user)
     {
         using (var conn = Database.GetConnection())
         {
@@ -40,7 +40,7 @@ public class UtilisateurDAO
                 try
                 {
                     cmd.ExecuteNonQuery();
-                    MailHelper.EnvoyerMailValidation(user.Email, user.TokenValidation, user.Nom);
+                    MailHelper.SendMailValidation(user.Email, user.TokenValidation, user.Nom);
                     return true;
                 }
                 catch (MySqlException ex)
@@ -52,7 +52,7 @@ public class UtilisateurDAO
         }
     }
 
-    public bool ExisteNomOuEmail(string nom, string email)
+    public bool ExistsNameOrEmail(string nom, string email)
     {
         using (var conn = Database.GetConnection())
         {
@@ -75,7 +75,7 @@ public class UtilisateurDAO
     /// </summary>
     /// <param name="identifiant">Le nom ou l'adresse e-mail de l'utilisateur.</param>
     /// <returns>Retourne l'utilisateur correspondant ou <c>null</c> s'il n'existe pas.</returns>
-    public Utilisateur GetByNomOuEmail(string identifiant)
+    public Utilisateur GetByNameOrEmail(string identifiant)
     {
         using (var conn = Database.GetConnection())
         {
@@ -152,7 +152,7 @@ public class UtilisateurDAO
     /// </summary>
     /// <param name="token">Le token de validation de l'utilisateur.</param>
     /// <returns>Retourne <c>true</c> si l'utilisateur a été validé avec succès, sinon <c>false</c>.</returns>
-    public bool ValiderUtilisateurParToken(string token)
+    public bool ValidateUserByToken(string token)
     {
         using (var conn = Database.GetConnection())
         {
@@ -184,7 +184,7 @@ public class UtilisateurDAO
     /// <param name="utilisateurId">L'identifiant de l'utilisateur.</param>
     /// <param name="code">Le code 2FA à enregistrer.</param>
     /// <param name="date">La date de génération du code 2FA.</param>
-    public void EnregistrerCode2FA(int utilisateurId, string code, DateTime date)
+    public void SaveCode2FA(int utilisateurId, string code, DateTime date)
     {
         using (var conn = Database.GetConnection())
         {
@@ -204,7 +204,7 @@ public class UtilisateurDAO
     /// Invalide le code de validation à deux facteurs (2FA) pour un utilisateur.
     /// </summary>
     /// <param name="utilisateurId">L'identifiant de l'utilisateur.</param>
-    public void InvaliderCode2FA(int utilisateurId)
+    public void Invalidate2FACode(int utilisateurId)
     {
         using (var conn = Database.GetConnection())
         {

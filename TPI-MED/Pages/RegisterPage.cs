@@ -75,9 +75,9 @@ public partial class RegisterPage : Page
         };
 
         UtilisateurDAO dao = new UtilisateurDAO();
-        if (!dao.ExisteNomOuEmail(nom, email))
+        if (!dao.ExistsNameOrEmail(nom, email))
         {
-            if (dao.CreerUtilisateur(utilisateur))
+            if (dao.CreateUser(utilisateur))
             {
                 MessageBox.Show("Inscription réussie,\nveuillez valider votre adresse mail !");
                 Application.MainPage = new LoginPage();

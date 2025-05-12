@@ -37,7 +37,7 @@ public static class MailHelper
     /// <param name="emailDestinataire">L'adresse e-mail du destinataire.</param>
     /// <param name="token">Le token de validation unique.</param>
     /// <param name="nom">Le nom de l'utilisateur.</param>
-    public static void EnvoyerMailValidation(string emailDestinataire, string token, string nom)
+    public static void SendMailValidation(string emailDestinataire, string token, string nom)
     {
         var lien = "https://dev.mediateur.mycpnv.ch/?token=" + token;
 
@@ -90,7 +90,7 @@ public static class MailHelper
     /// </summary>
     /// <param name="email">L'adresse e-mail du destinataire.</param>
     /// <param name="code">Le code 2FA à envoyer.</param>
-    public static void EnvoyerCode2FA(string email, string code)
+    public static void SendCode2FA(string email, string code)
     {
         MailMessage mail = new MailMessage();
         mail.To.Add(email);

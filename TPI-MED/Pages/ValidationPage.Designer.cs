@@ -53,6 +53,5 @@ partial class ValidationPage
 
         this.Text = "Validation de compte";
         this.Size = new System.Drawing.Size(800, 400);
-        //this.Appear += new EventHandler(this.ValidationPage_Appear);
     }
 }

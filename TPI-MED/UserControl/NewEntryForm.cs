@@ -66,7 +66,7 @@ public partial class NewEntryForm : Form
         _seancesToEdit = seances;
 
         InitializeComponent();
-        RemplirChamps();
+        FillInTheFields();
     }
 
     /// <summary>
@@ -90,7 +90,7 @@ public partial class NewEntryForm : Form
         var dureeAdmin = (int)numDuree.Value;
         var type = tabType.SelectedTab.Text;
 
-        if (!DateHelper.EstDansAnneeScolaireCourante(date))
+        if (!DateHelper.IsInCurrentSchoolYear(date))
         {
             datePicker.Value = DateTime.Today;
             AlertBox.Show("La date doit être comprise dans l'année scolaire courante.", MessageBoxIcon.Error);
@@ -172,12 +172,12 @@ public partial class NewEntryForm : Form
 
             if (_eventToEdit == null)
             {
-                interviewId = new InterviewDAO().AjouterInterview(interview);
+                interviewId = new InterviewDAO().AddInterview(interview);
             }
             else
             {
                 interview.Id = _eventToEdit.InterviewId ?? 0;
-                new InterviewDAO().ModifierInterview(interview);
+                new InterviewDAO().EditInterview(interview);
                 interviewId = interview.Id;
             }
         }
@@ -195,7 +195,7 @@ public partial class NewEntryForm : Form
                 InterviewId = interviewId
             };
 
-            eventId = new EventDAO().AjouterEvenement(evenement);
+            eventId = new EventDAO().AddEvent(evenement);
         }
         else
         {
@@ -205,7 +205,7 @@ public partial class NewEntryForm : Form
             _eventToEdit.TempsAdmin = dureeAdmin;
             _eventToEdit.InterviewId = interviewId;
 
-            new EventDAO().ModifierEvenement(_eventToEdit);
+            new EventDAO().EditEvent(_eventToEdit);
             eventId = _eventToEdit.Id;
         }
 
@@ -237,7 +237,7 @@ public partial class NewEntryForm : Form
                 return;
             }
 
-            new SeanceDAO().ModifierSeancesPourEvenement(eventId, seances);
+            new SeanceDAO().EditSessionsForEvent(eventId, seances);
         }
 
         AlertBox.Show("Entrée enregistrée avec succès !", MessageBoxIcon.Information);
@@ -248,7 +248,7 @@ public partial class NewEntryForm : Form
     /// <summary>
     /// Remplit les champs du formulaire avec les données de l'événement, de l'entretien ou des séances à éditer.
     /// </summary>
-    private void RemplirChamps()
+    private void FillInTheFields()
     {
         if (_eventToEdit == null) return;
 

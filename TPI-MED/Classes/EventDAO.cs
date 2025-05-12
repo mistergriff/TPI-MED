@@ -19,7 +19,7 @@ public class EventDAO
     /// </summary>
     /// <param name="evt">L'événement à ajouter.</param>
     /// <returns>L'identifiant de l'événement nouvellement ajouté.</returns>
-    public int AjouterEvenement(Event evt)
+    public int AddEvent(Event evt)
     {
         using (var conn = Database.GetConnection())
         {
@@ -136,7 +136,7 @@ public class EventDAO
                     {
                         // Calculer l'année scolaire à partir de la date
                         var eventDate = reader.GetDateTime("date");
-                        string anneeScolaire = GetAnneeScolaire(eventDate);
+                        string anneeScolaire = GetSchoolYear(eventDate);
                         result.Add(anneeScolaire);
                     }
                 }
@@ -154,7 +154,7 @@ public class EventDAO
     /// </summary>
     /// <param name="date">La date de l'événement.</param>
     /// <returns>L'année scolaire correspondante (ex. : "2024-2025").</returns>
-    private string GetAnneeScolaire(DateTime date)
+    private string GetSchoolYear(DateTime date)
     {
         if (date.Month >= 8) // Si le mois est août ou plus tard
         {
@@ -171,7 +171,7 @@ public class EventDAO
     /// </summary>
     /// <param name="evt">L'événement à modifier.</param>
     /// <returns><c>true</c> si la modification a réussi, sinon <c>false</c>.</returns>
-    public bool ModifierEvenement(Event evt)
+    public bool EditEvent(Event evt)
     {
         using (var conn = Database.GetConnection())
         {
@@ -200,7 +200,7 @@ public class EventDAO
     /// </summary>
     /// <param name="id">L'identifiant de l'événement à supprimer.</param>
     /// <returns><c>true</c> si la suppression a réussi, sinon <c>false</c>.</returns>
-    public bool SupprimerEvenement(int id)
+    public bool DeleteEvent(int id)
     {
         using (var conn = Database.GetConnection())
         {

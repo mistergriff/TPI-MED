@@ -42,7 +42,7 @@ public partial class ValidationPage : Page
     private void btnValider_Click(object sender, EventArgs e)
     {
         UtilisateurDAO dao = new UtilisateurDAO();
-        bool ok = dao.ValiderUtilisateurParToken(_token);
+        bool ok = dao.ValidateUserByToken(_token);
         btnValider.Enabled = false; // Désactiver le bouton après clic
 
         if (!ok)

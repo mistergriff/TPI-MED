@@ -19,7 +19,7 @@ public class SeanceDAO
     /// </summary>
     /// <param name="eventId">L'identifiant de l'événement.</param>
     /// <param name="seances">Liste des séances à ajouter.</param>
-    public void AjouterSeancesPourEvenement(int eventId, List<Seance> seances)
+    public void AddSessionsForEvent(int eventId, List<Seance> seances)
     {
         using (var conn = Database.GetConnection())
         {
@@ -47,7 +47,7 @@ public class SeanceDAO
     /// </summary>
     /// <param name="eventId">L'identifiant de l'événement.</param>
     /// <param name="seances">Liste des nouvelles séances à associer à l'événement.</param>
-    public void ModifierSeancesPourEvenement(int eventId, List<Seance> seances)
+    public void EditSessionsForEvent(int eventId, List<Seance> seances)
     {
         using (var conn = Database.GetConnection())
         {
@@ -118,7 +118,7 @@ public class SeanceDAO
     /// </summary>
     /// <param name="userId">L'identifiant de l'utilisateur.</param>
     /// <returns>Un dictionnaire contenant les types de séances et leur durée totale.</returns>
-    public Dictionary<string, int> GetDureeTotaleParType(int userId, DateTime start, DateTime end)
+    public Dictionary<string, int> GetTotalDurationByType(int userId, DateTime start, DateTime end)
     {
         var result = new Dictionary<string, int>();
         using (var conn = Database.GetConnection())
@@ -150,5 +150,4 @@ public class SeanceDAO
         }
         return result;
     }
-
 }

@@ -10,8 +10,6 @@ using Wisej.Web.Ext.ChartJS;
 using System.Drawing;
 using System.Collections.Generic;
 using System;
-using System.Linq;
-using System.Drawing.Imaging;
 
 /// <summary>
 /// Représente une page affichant des statistiques sous forme de graphiques.
@@ -81,7 +79,7 @@ public partial class StatsPage : UserControl
             Padding = new Padding(20),
         };
 
-        LoadAnneeScolaire();
+        LoadSchoolYear();
 
         dropdown.SelectedIndexChanged += dropdownSelection_Changed; // après le load des années pour éviter le double ajout des charts.
 
@@ -111,7 +109,7 @@ public partial class StatsPage : UserControl
         this.Controls.Add(layoutPrincipal);
     }
 
-    private void LoadAnneeScolaire()
+    private void LoadSchoolYear()
     {
         // Récupérer les années disponibles depuis EventDAO
         var eventDAO = new EventDAO();
@@ -146,8 +144,8 @@ public partial class StatsPage : UserControl
     private ChartJS CreateChart_Repartition(string anneeScolaire)
     {
         int userId = (int)Application.Session["userId"];
-        var (start, end) = DateHelper.GetPlageAnneeScolaire(anneeScolaire);
-        var data = new SeanceDAO().GetDureeTotaleParType(userId, start, end);
+        var (start, end) = DateHelper.GetBeachSchoolYear(anneeScolaire);
+        var data = new SeanceDAO().GetTotalDurationByType(userId, start, end);
 
 
         var labels = new List<string>();
@@ -188,8 +186,8 @@ public partial class StatsPage : UserControl
     private ChartJS CreateChart_Contexte(string anneeScolaire)
     {
         int userId = (int)Application.Session["userId"];
-        var (start, end) = DateHelper.GetPlageAnneeScolaire(anneeScolaire);
-        var data = new InterviewDAO().GetDureeParType(userId, start, end);
+        var (start, end) = DateHelper.GetBeachSchoolYear(anneeScolaire);
+        var data = new InterviewDAO().GetDurationByType(userId, start, end);
 
         var labels = new List<string>();
         var values = new List<object>();
@@ -229,7 +227,7 @@ public partial class StatsPage : UserControl
     private ChartJS CreateChart_Interventions(string anneeScolaire)
     {
         int userId = (int)Application.Session["userId"];
-        var (start, end) = DateHelper.GetPlageAnneeScolaire(anneeScolaire);
+        var (start, end) = DateHelper.GetBeachSchoolYear(anneeScolaire);
         var data = new InterviewDAO().GetStatsMotivations(userId, start, end);
 
         var labels = new List<string>();

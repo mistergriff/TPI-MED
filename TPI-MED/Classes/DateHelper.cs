@@ -17,7 +17,7 @@ public static class DateHelper
     /// </summary>
     /// <param name="date">La date à vérifier.</param>
     /// <returns><c>true</c> si la date est dans l'année scolaire courante, sinon <c>false</c>.</returns>
-    public static bool EstDansAnneeScolaireCourante(DateTime date)
+    public static bool IsInCurrentSchoolYear(DateTime date)
     {
         var aujourdHui = DateTime.Today;
         int anneeDebut;
@@ -45,7 +45,7 @@ public static class DateHelper
     /// <param name="anneeScolaire">L'année scolaire au format "YYYY-YYYY" (par exemple, "2022-2023").</param>
     /// <returns><c>true</c> si la date est dans l'année scolaire spécifiée, sinon <c>false</c>.</returns>
     /// <exception cref="ArgumentException">L'année scolaire n'est pas dans un format valide.</exception>
-    public static bool EstDansAnneeScolaire(DateTime date, string anneeScolaire)
+    public static bool IsInSchoolYear(DateTime date, string anneeScolaire)
     {
         // Format attendu : "2022-2023"
         var parties = anneeScolaire.Split('-');
@@ -68,7 +68,7 @@ public static class DateHelper
     /// <param name="annee">L'année scolaire au format "YYYY-YYYY" (par exemple, "2024-2025").</param>
     /// <returns>Un tuple contenant la date de début et la date de fin de l'année scolaire.</returns>
     /// <exception cref="ArgumentException">L'année scolaire n'est pas dans un format valide.</exception>
-    public static (DateTime debut, DateTime fin) GetPlageAnneeScolaire(string annee)
+    public static (DateTime debut, DateTime fin) GetBeachSchoolYear(string annee)
     {
         // annee doit être sous la forme "2024-2025"
         var parties = annee.Split('-');

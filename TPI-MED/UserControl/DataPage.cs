@@ -20,13 +20,13 @@ public partial class DataPage : UserControl
     public DataPage()
     {
         InitializeComponent();
-        ChargerDonnees();
+        LoadData();
     }
 
     /// <summary>
     /// Charge les données des événements et les affiche dans la grille.
     /// </summary>
-    private void ChargerDonnees()
+    private void LoadData()
     {
         // Désactiver temporairement l'événement CellClick pour éviter les appels récursifs
         dataGrid.CellClick -= dataGrid_CellContentClick;
@@ -59,7 +59,7 @@ public partial class DataPage : UserControl
 
         foreach (var evt in events)
         {
-            if(!DateHelper.EstDansAnneeScolaireCourante(evt.Date))
+            if(!DateHelper.IsInCurrentSchoolYear(evt.Date))
                 continue;
 
             int duree = 0;
@@ -228,7 +228,7 @@ public partial class DataPage : UserControl
         if (form.ShowDialog() == DialogResult.OK)
         {
             // Recharger les données après l'ajout
-            ChargerDonnees();
+            LoadData();
         }
     }
 
@@ -265,7 +265,7 @@ public partial class DataPage : UserControl
                         var form = new NewEntryForm(evt, interview, seances);
                         if (form.ShowDialog() == DialogResult.OK)
                         {
-                            ChargerDonnees();
+                            LoadData();
                         }
                     }
                 }
@@ -280,10 +280,10 @@ public partial class DataPage : UserControl
                     {
                         int id = item.Id;
 
-                        if (new EventDAO().SupprimerEvenement(id))
+                        if (new EventDAO().DeleteEvent(id))
                         {
                             dataGrid.CellClick -= dataGrid_CellContentClick;
-                            ChargerDonnees();
+                            LoadData();
                             AlertBox.Show("Événement supprimé avec succès.", MessageBoxIcon.Information);
                         }
                         else

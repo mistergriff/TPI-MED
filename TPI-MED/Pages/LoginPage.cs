@@ -33,7 +33,7 @@ public partial class LoginPage : Page
         string motDePasse = txtMotDePasse.Text;
 
         UtilisateurDAO dao = new UtilisateurDAO();
-        Utilisateur utilisateur = dao.GetByNomOuEmail(identifiant);
+        Utilisateur utilisateur = dao.GetByNameOrEmail(identifiant);
 
         if (utilisateur == null)
         {
@@ -54,8 +54,8 @@ public partial class LoginPage : Page
             string code2FA = new Random().Next(100000, 999999).ToString();
             DateTime dateGeneration = DateTime.Now;
 
-            dao.EnregistrerCode2FA(utilisateur.Id, code2FA, dateGeneration);
-            MailHelper.EnvoyerCode2FA(utilisateur.Email, code2FA);
+            dao.SaveCode2FA(utilisateur.Id, code2FA, dateGeneration);
+            MailHelper.SendCode2FA(utilisateur.Email, code2FA);
 
             // Redirige vers une page de saisie du code
             Application.MainPage = new Code2FAPage(utilisateur.Id);

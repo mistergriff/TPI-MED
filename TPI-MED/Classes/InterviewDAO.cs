@@ -20,7 +20,7 @@ public class InterviewDAO
     /// </summary>
     /// <param name="itv">L'entretien à ajouter.</param>
     /// <returns>L'identifiant de l'entretien nouvellement ajouté.</returns>
-    public int AjouterInterview(Interview itv)
+    public int AddInterview(Interview itv)
     {
         using (var conn = Database.GetConnection())
         {
@@ -70,7 +70,7 @@ public class InterviewDAO
     /// </summary>
     /// <param name="interview">L'entretien à modifier.</param>
     /// <returns><c>true</c> si la modification a réussi, sinon <c>false</c>.</returns>
-    public bool ModifierInterview(Interview interview)
+    public bool EditInterview(Interview interview)
     {
         using (var conn = Database.GetConnection())
         {
@@ -176,7 +176,7 @@ public class InterviewDAO
     /// </summary>
     /// <param name="userId">L'identifiant de l'utilisateur.</param>
     /// <returns>Un dictionnaire contenant les types d'entretiens et leur durée totale.</returns>
-    public Dictionary<string, int> GetDureeParType(int userId, DateTime start, DateTime end)
+    public Dictionary<string, int> GetDurationByType(int userId, DateTime start, DateTime end)
     {
         var result = new Dictionary<string, int>();
 
