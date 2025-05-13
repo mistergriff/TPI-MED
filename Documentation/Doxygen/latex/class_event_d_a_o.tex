@@ -1,0 +1,136 @@
+\doxysection{Event\+DAO Class Reference}
+\label{class_event_d_a_o}\index{EventDAO@{EventDAO}}
+
+
+Fournit des méthodes pour gérer les événements dans la base de données.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \textbf{ Add\+Event} (\textbf{ Event} evt)
+\begin{DoxyCompactList}\small\item\em Ajoute un nouvel événement dans la base de données. \end{DoxyCompactList}\item 
+List$<$ \textbf{ Event} $>$ \textbf{ Get\+By\+User\+Id} (int user\+Id)
+\begin{DoxyCompactList}\small\item\em Récupère une liste d\textquotesingle{}événements associés à un utilisateur spécifique. \end{DoxyCompactList}\item 
+\textbf{ Event} \textbf{ Get\+By\+Id} (int id)
+\begin{DoxyCompactList}\small\item\em Récupère un événement par son identifiant unique. \end{DoxyCompactList}\item 
+List$<$ string $>$ \textbf{ Get\+Available\+Years} (int id)
+\begin{DoxyCompactList}\small\item\em Récupère les années scolaires disponibles en fonction des événements existants. \end{DoxyCompactList}\item 
+bool \textbf{ Edit\+Event} (\textbf{ Event} evt)
+\begin{DoxyCompactList}\small\item\em Modifie un événement existant dans la base de données. \end{DoxyCompactList}\item 
+bool \textbf{ Delete\+Event} (int id)
+\begin{DoxyCompactList}\small\item\em Supprime un événement de la base de données, ainsi que l\textquotesingle{}entretien associé s\textquotesingle{}il existe. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Fournit des méthodes pour gérer les événements dans la base de données. 
+
+\doxysubsection{Member Function Documentation}
+\index{EventDAO@{EventDAO}!AddEvent@{AddEvent}}
+\index{AddEvent@{AddEvent}!EventDAO@{EventDAO}}
+\doxysubsubsection{AddEvent()}
+{\footnotesize\ttfamily \label{class_event_d_a_o_a9d49558aeebc6d45755a490ee7ec0730} 
+int Event\+DAO.\+Add\+Event (\begin{DoxyParamCaption}\item[{\textbf{ Event}}]{evt}{}\end{DoxyParamCaption})}
+
+
+
+Ajoute un nouvel événement dans la base de données. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em evt} & L\textquotesingle{}événement à ajouter.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L\textquotesingle{}identifiant de l\textquotesingle{}événement nouvellement ajouté.
+\end{DoxyReturn}
+\index{EventDAO@{EventDAO}!DeleteEvent@{DeleteEvent}}
+\index{DeleteEvent@{DeleteEvent}!EventDAO@{EventDAO}}
+\doxysubsubsection{DeleteEvent()}
+{\footnotesize\ttfamily \label{class_event_d_a_o_af39d86f19ab7112e6bfd5ca4d72cca17} 
+bool Event\+DAO.\+Delete\+Event (\begin{DoxyParamCaption}\item[{int}]{id}{}\end{DoxyParamCaption})}
+
+
+
+Supprime un événement de la base de données, ainsi que l\textquotesingle{}entretien associé s\textquotesingle{}il existe. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & L\textquotesingle{}identifiant de l\textquotesingle{}événement à supprimer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} si la suppression a réussi, sinon {\ttfamily false}.
+\end{DoxyReturn}
+\index{EventDAO@{EventDAO}!EditEvent@{EditEvent}}
+\index{EditEvent@{EditEvent}!EventDAO@{EventDAO}}
+\doxysubsubsection{EditEvent()}
+{\footnotesize\ttfamily \label{class_event_d_a_o_aa582a8fee5b123052ae1f19d2f0d6216} 
+bool Event\+DAO.\+Edit\+Event (\begin{DoxyParamCaption}\item[{\textbf{ Event}}]{evt}{}\end{DoxyParamCaption})}
+
+
+
+Modifie un événement existant dans la base de données. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em evt} & L\textquotesingle{}événement à modifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} si la modification a réussi, sinon {\ttfamily false}.
+\end{DoxyReturn}
+\index{EventDAO@{EventDAO}!GetAvailableYears@{GetAvailableYears}}
+\index{GetAvailableYears@{GetAvailableYears}!EventDAO@{EventDAO}}
+\doxysubsubsection{GetAvailableYears()}
+{\footnotesize\ttfamily \label{class_event_d_a_o_ad99d5a189a386e78f65b9194d2ca77bb} 
+List$<$ string $>$ Event\+DAO.\+Get\+Available\+Years (\begin{DoxyParamCaption}\item[{int}]{id}{}\end{DoxyParamCaption})}
+
+
+
+Récupère les années scolaires disponibles en fonction des événements existants. 
+
+\begin{DoxyReturn}{Returns}
+Une liste des années scolaires disponibles (ex. \+: "{}2024-\/2025"{}).
+\end{DoxyReturn}
+\index{EventDAO@{EventDAO}!GetById@{GetById}}
+\index{GetById@{GetById}!EventDAO@{EventDAO}}
+\doxysubsubsection{GetById()}
+{\footnotesize\ttfamily \label{class_event_d_a_o_a140363493f145df7941097d4c0439291} 
+\textbf{ Event} Event\+DAO.\+Get\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{id}{}\end{DoxyParamCaption})}
+
+
+
+Récupère un événement par son identifiant unique. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & L\textquotesingle{}identifiant de l\textquotesingle{}événement.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L\textquotesingle{}événement correspondant ou {\ttfamily null} s\textquotesingle{}il n\textquotesingle{}existe pas.
+\end{DoxyReturn}
+\index{EventDAO@{EventDAO}!GetByUserId@{GetByUserId}}
+\index{GetByUserId@{GetByUserId}!EventDAO@{EventDAO}}
+\doxysubsubsection{GetByUserId()}
+{\footnotesize\ttfamily \label{class_event_d_a_o_ac22f358a8dfc8c08a4bf1ee1d28ed0e2} 
+List$<$ \textbf{ Event} $>$ Event\+DAO.\+Get\+By\+User\+Id (\begin{DoxyParamCaption}\item[{int}]{user\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Récupère une liste d\textquotesingle{}événements associés à un utilisateur spécifique. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+Id} & L\textquotesingle{}identifiant de l\textquotesingle{}utilisateur.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Une liste d\textquotesingle{}événements associés à l\textquotesingle{}utilisateur.
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/ph62ldr/source/repos/\+TPI-\/\+MED/\+TPI-\/\+MED/\+Classes/Event\+DAO.\+cs\end{DoxyCompactItemize}

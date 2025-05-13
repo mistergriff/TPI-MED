@@ -1,0 +1,99 @@
+\doxysection{Seance\+DAO Class Reference}
+\label{class_seance_d_a_o}\index{SeanceDAO@{SeanceDAO}}
+
+
+Fournit des méthodes pour gérer les séances associées aux événements dans la base de données.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Add\+Sessions\+For\+Event} (int event\+Id, List$<$ \textbf{ Seance} $>$ seances)
+\begin{DoxyCompactList}\small\item\em Ajoute une ou plusieurs séances associées à un événement. \end{DoxyCompactList}\item 
+void \textbf{ Edit\+Sessions\+For\+Event} (int event\+Id, List$<$ \textbf{ Seance} $>$ seances)
+\begin{DoxyCompactList}\small\item\em Modifie les séances associées à un événement en supprimant les anciennes et en ajoutant les nouvelles. \end{DoxyCompactList}\item 
+List$<$ \textbf{ Seance} $>$ \textbf{ Get\+By\+Event\+Id} (int event\+Id)
+\begin{DoxyCompactList}\small\item\em Récupère toutes les séances associées à un événement donné. \end{DoxyCompactList}\item 
+Dictionary$<$ string, int $>$ \textbf{ Get\+Total\+Duration\+By\+Type} (int user\+Id, Date\+Time start, Date\+Time end)
+\begin{DoxyCompactList}\small\item\em Récupère la durée totale des séances par type pour un utilisateur donné. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Fournit des méthodes pour gérer les séances associées aux événements dans la base de données. 
+
+\doxysubsection{Member Function Documentation}
+\index{SeanceDAO@{SeanceDAO}!AddSessionsForEvent@{AddSessionsForEvent}}
+\index{AddSessionsForEvent@{AddSessionsForEvent}!SeanceDAO@{SeanceDAO}}
+\doxysubsubsection{AddSessionsForEvent()}
+{\footnotesize\ttfamily \label{class_seance_d_a_o_a0d99fb1975719b140a4117f8f5c2b075} 
+void Seance\+DAO.\+Add\+Sessions\+For\+Event (\begin{DoxyParamCaption}\item[{int}]{event\+Id}{, }\item[{List$<$ \textbf{ Seance} $>$}]{seances}{}\end{DoxyParamCaption})}
+
+
+
+Ajoute une ou plusieurs séances associées à un événement. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+Id} & L\textquotesingle{}identifiant de l\textquotesingle{}événement.\\
+\hline
+{\em seances} & Liste des séances à ajouter.\\
+\hline
+\end{DoxyParams}
+\index{SeanceDAO@{SeanceDAO}!EditSessionsForEvent@{EditSessionsForEvent}}
+\index{EditSessionsForEvent@{EditSessionsForEvent}!SeanceDAO@{SeanceDAO}}
+\doxysubsubsection{EditSessionsForEvent()}
+{\footnotesize\ttfamily \label{class_seance_d_a_o_a6faf91614610e99d66327e9acf04c052} 
+void Seance\+DAO.\+Edit\+Sessions\+For\+Event (\begin{DoxyParamCaption}\item[{int}]{event\+Id}{, }\item[{List$<$ \textbf{ Seance} $>$}]{seances}{}\end{DoxyParamCaption})}
+
+
+
+Modifie les séances associées à un événement en supprimant les anciennes et en ajoutant les nouvelles. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+Id} & L\textquotesingle{}identifiant de l\textquotesingle{}événement.\\
+\hline
+{\em seances} & Liste des nouvelles séances à associer à l\textquotesingle{}événement.\\
+\hline
+\end{DoxyParams}
+\index{SeanceDAO@{SeanceDAO}!GetByEventId@{GetByEventId}}
+\index{GetByEventId@{GetByEventId}!SeanceDAO@{SeanceDAO}}
+\doxysubsubsection{GetByEventId()}
+{\footnotesize\ttfamily \label{class_seance_d_a_o_ab695bba419ab0a3aa9e8a76aa222d7a5} 
+List$<$ \textbf{ Seance} $>$ Seance\+DAO.\+Get\+By\+Event\+Id (\begin{DoxyParamCaption}\item[{int}]{event\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Récupère toutes les séances associées à un événement donné. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em event\+Id} & L\textquotesingle{}identifiant de l\textquotesingle{}événement.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Une liste de séances associées à l\textquotesingle{}événement.
+\end{DoxyReturn}
+\index{SeanceDAO@{SeanceDAO}!GetTotalDurationByType@{GetTotalDurationByType}}
+\index{GetTotalDurationByType@{GetTotalDurationByType}!SeanceDAO@{SeanceDAO}}
+\doxysubsubsection{GetTotalDurationByType()}
+{\footnotesize\ttfamily \label{class_seance_d_a_o_a17b3b80465a79b6f1d92535f344df184} 
+Dictionary$<$ string, int $>$ Seance\+DAO.\+Get\+Total\+Duration\+By\+Type (\begin{DoxyParamCaption}\item[{int}]{user\+Id}{, }\item[{Date\+Time}]{start}{, }\item[{Date\+Time}]{end}{}\end{DoxyParamCaption})}
+
+
+
+Récupère la durée totale des séances par type pour un utilisateur donné. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+Id} & L\textquotesingle{}identifiant de l\textquotesingle{}utilisateur.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Un dictionnaire contenant les types de séances et leur durée totale.
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/ph62ldr/source/repos/\+TPI-\/\+MED/\+TPI-\/\+MED/\+Classes/Seance\+DAO.\+cs\end{DoxyCompactItemize}

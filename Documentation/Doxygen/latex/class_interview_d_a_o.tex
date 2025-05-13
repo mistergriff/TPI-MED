@@ -1,0 +1,121 @@
+\doxysection{Interview\+DAO Class Reference}
+\label{class_interview_d_a_o}\index{InterviewDAO@{InterviewDAO}}
+
+
+Fournit des méthodes pour gérer les entretiens dans la base de données.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \textbf{ Add\+Interview} (\textbf{ Interview} itv)
+\begin{DoxyCompactList}\small\item\em Ajoute un nouvel entretien dans la base de données. \end{DoxyCompactList}\item 
+bool \textbf{ Edit\+Interview} (\textbf{ Interview} interview)
+\begin{DoxyCompactList}\small\item\em Modifie un entretien existant dans la base de données. \end{DoxyCompactList}\item 
+\textbf{ Interview} \textbf{ Get\+By\+Id} (int id)
+\begin{DoxyCompactList}\small\item\em Récupère un entretien par son identifiant unique. \end{DoxyCompactList}\item 
+Dictionary$<$ string, int $>$ \textbf{ Get\+Duration\+By\+Type} (int user\+Id, Date\+Time start, Date\+Time end)
+\begin{DoxyCompactList}\small\item\em Récupère la durée totale des entretiens par type pour un utilisateur donné. \end{DoxyCompactList}\item 
+Dictionary$<$ string, int $>$ \textbf{ Get\+Stats\+Motivations} (int user\+Id, Date\+Time start, Date\+Time end)
+\begin{DoxyCompactList}\small\item\em Récupère les statistiques des motivations cochées pour un utilisateur donné. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Fournit des méthodes pour gérer les entretiens dans la base de données. 
+
+\doxysubsection{Member Function Documentation}
+\index{InterviewDAO@{InterviewDAO}!AddInterview@{AddInterview}}
+\index{AddInterview@{AddInterview}!InterviewDAO@{InterviewDAO}}
+\doxysubsubsection{AddInterview()}
+{\footnotesize\ttfamily \label{class_interview_d_a_o_adc5aab409b81be44e5b93a2b707df8b1} 
+int Interview\+DAO.\+Add\+Interview (\begin{DoxyParamCaption}\item[{\textbf{ Interview}}]{itv}{}\end{DoxyParamCaption})}
+
+
+
+Ajoute un nouvel entretien dans la base de données. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em itv} & L\textquotesingle{}entretien à ajouter.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L\textquotesingle{}identifiant de l\textquotesingle{}entretien nouvellement ajouté.
+\end{DoxyReturn}
+\index{InterviewDAO@{InterviewDAO}!EditInterview@{EditInterview}}
+\index{EditInterview@{EditInterview}!InterviewDAO@{InterviewDAO}}
+\doxysubsubsection{EditInterview()}
+{\footnotesize\ttfamily \label{class_interview_d_a_o_a2f6293f1213e924f165c3f68fbbccf76} 
+bool Interview\+DAO.\+Edit\+Interview (\begin{DoxyParamCaption}\item[{\textbf{ Interview}}]{interview}{}\end{DoxyParamCaption})}
+
+
+
+Modifie un entretien existant dans la base de données. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em interview} & L\textquotesingle{}entretien à modifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} si la modification a réussi, sinon {\ttfamily false}.
+\end{DoxyReturn}
+\index{InterviewDAO@{InterviewDAO}!GetById@{GetById}}
+\index{GetById@{GetById}!InterviewDAO@{InterviewDAO}}
+\doxysubsubsection{GetById()}
+{\footnotesize\ttfamily \label{class_interview_d_a_o_ab6c73e054e8c18d3f2c49c0ec7345424} 
+\textbf{ Interview} Interview\+DAO.\+Get\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{id}{}\end{DoxyParamCaption})}
+
+
+
+Récupère un entretien par son identifiant unique. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & L\textquotesingle{}identifiant de l\textquotesingle{}entretien.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+L\textquotesingle{}entretien correspondant ou {\ttfamily null} s\textquotesingle{}il n\textquotesingle{}existe pas.
+\end{DoxyReturn}
+\index{InterviewDAO@{InterviewDAO}!GetDurationByType@{GetDurationByType}}
+\index{GetDurationByType@{GetDurationByType}!InterviewDAO@{InterviewDAO}}
+\doxysubsubsection{GetDurationByType()}
+{\footnotesize\ttfamily \label{class_interview_d_a_o_a5f560d2da0f6fa596d294d6b9a3cc4d5} 
+Dictionary$<$ string, int $>$ Interview\+DAO.\+Get\+Duration\+By\+Type (\begin{DoxyParamCaption}\item[{int}]{user\+Id}{, }\item[{Date\+Time}]{start}{, }\item[{Date\+Time}]{end}{}\end{DoxyParamCaption})}
+
+
+
+Récupère la durée totale des entretiens par type pour un utilisateur donné. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+Id} & L\textquotesingle{}identifiant de l\textquotesingle{}utilisateur.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Un dictionnaire contenant les types d\textquotesingle{}entretiens et leur durée totale.
+\end{DoxyReturn}
+\index{InterviewDAO@{InterviewDAO}!GetStatsMotivations@{GetStatsMotivations}}
+\index{GetStatsMotivations@{GetStatsMotivations}!InterviewDAO@{InterviewDAO}}
+\doxysubsubsection{GetStatsMotivations()}
+{\footnotesize\ttfamily \label{class_interview_d_a_o_aed33f23c110ceac849845496ab4c8356} 
+Dictionary$<$ string, int $>$ Interview\+DAO.\+Get\+Stats\+Motivations (\begin{DoxyParamCaption}\item[{int}]{user\+Id}{, }\item[{Date\+Time}]{start}{, }\item[{Date\+Time}]{end}{}\end{DoxyParamCaption})}
+
+
+
+Récupère les statistiques des motivations cochées pour un utilisateur donné. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+Id} & L\textquotesingle{}identifiant de l\textquotesingle{}utilisateur.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Un dictionnaire contenant les motivations et leur somme.
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/ph62ldr/source/repos/\+TPI-\/\+MED/\+TPI-\/\+MED/\+Classes/Interview\+DAO.\+cs\end{DoxyCompactItemize}

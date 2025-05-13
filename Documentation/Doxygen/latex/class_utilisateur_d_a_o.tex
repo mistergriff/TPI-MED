@@ -1,0 +1,142 @@
+\doxysection{Utilisateur\+DAO Class Reference}
+\label{class_utilisateur_d_a_o}\index{UtilisateurDAO@{UtilisateurDAO}}
+
+
+Fournit des méthodes pour gérer les utilisateurs dans la base de données {\ttfamily users}.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \textbf{ Create\+User} (\textbf{ Utilisateur} user)
+\begin{DoxyCompactList}\small\item\em Crée un nouvel utilisateur dans la base de données. \end{DoxyCompactList}\item 
+\label{class_utilisateur_d_a_o_a46f77956c9c7bafe7562817a5a04ec7d} 
+bool {\bfseries Exists\+Name\+Or\+Email} (string nom, string email)
+\item 
+\textbf{ Utilisateur} \textbf{ Get\+By\+Name\+Or\+Email} (string identifiant)
+\begin{DoxyCompactList}\small\item\em Récupère un utilisateur par son nom ou son adresse e-\/mail. \end{DoxyCompactList}\item 
+\textbf{ Utilisateur} \textbf{ Get\+By\+Id} (int id)
+\begin{DoxyCompactList}\small\item\em Récupère un utilisateur par son identifiant unique. \end{DoxyCompactList}\item 
+bool \textbf{ Validate\+User\+By\+Token} (string token)
+\begin{DoxyCompactList}\small\item\em Valide un utilisateur en utilisant son token de validation. \end{DoxyCompactList}\item 
+void \textbf{ Save\+Code2\+FA} (int utilisateur\+Id, string code, Date\+Time date)
+\begin{DoxyCompactList}\small\item\em Enregistre un code de validation à deux facteurs (2FA) pour un utilisateur. \end{DoxyCompactList}\item 
+void \textbf{ Invalidate2\+FACode} (int utilisateur\+Id)
+\begin{DoxyCompactList}\small\item\em Invalide le code de validation à deux facteurs (2FA) pour un utilisateur. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Fournit des méthodes pour gérer les utilisateurs dans la base de données {\ttfamily users}. 
+
+\doxysubsection{Member Function Documentation}
+\index{UtilisateurDAO@{UtilisateurDAO}!CreateUser@{CreateUser}}
+\index{CreateUser@{CreateUser}!UtilisateurDAO@{UtilisateurDAO}}
+\doxysubsubsection{CreateUser()}
+{\footnotesize\ttfamily \label{class_utilisateur_d_a_o_a1ee58880c3d1919e0b510f2061c35b75} 
+bool Utilisateur\+DAO.\+Create\+User (\begin{DoxyParamCaption}\item[{\textbf{ Utilisateur}}]{user}{}\end{DoxyParamCaption})}
+
+
+
+Crée un nouvel utilisateur dans la base de données. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em user} & L\textquotesingle{}utilisateur à créer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Retourne {\ttfamily true} si l\textquotesingle{}utilisateur a été créé avec succès, sinon {\ttfamily false}.
+\end{DoxyReturn}
+\index{UtilisateurDAO@{UtilisateurDAO}!GetById@{GetById}}
+\index{GetById@{GetById}!UtilisateurDAO@{UtilisateurDAO}}
+\doxysubsubsection{GetById()}
+{\footnotesize\ttfamily \label{class_utilisateur_d_a_o_affe160cabfbcfd5fa7153e3ee53af258} 
+\textbf{ Utilisateur} Utilisateur\+DAO.\+Get\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{id}{}\end{DoxyParamCaption})}
+
+
+
+Récupère un utilisateur par son identifiant unique. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & L\textquotesingle{}identifiant unique de l\textquotesingle{}utilisateur.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Retourne l\textquotesingle{}utilisateur correspondant ou {\ttfamily null} s\textquotesingle{}il n\textquotesingle{}existe pas.
+\end{DoxyReturn}
+\index{UtilisateurDAO@{UtilisateurDAO}!GetByNameOrEmail@{GetByNameOrEmail}}
+\index{GetByNameOrEmail@{GetByNameOrEmail}!UtilisateurDAO@{UtilisateurDAO}}
+\doxysubsubsection{GetByNameOrEmail()}
+{\footnotesize\ttfamily \label{class_utilisateur_d_a_o_a8be8d7f06c1ff057098a8311b69018c6} 
+\textbf{ Utilisateur} Utilisateur\+DAO.\+Get\+By\+Name\+Or\+Email (\begin{DoxyParamCaption}\item[{string}]{identifiant}{}\end{DoxyParamCaption})}
+
+
+
+Récupère un utilisateur par son nom ou son adresse e-\/mail. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em identifiant} & Le nom ou l\textquotesingle{}adresse e-\/mail de l\textquotesingle{}utilisateur.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Retourne l\textquotesingle{}utilisateur correspondant ou {\ttfamily null} s\textquotesingle{}il n\textquotesingle{}existe pas.
+\end{DoxyReturn}
+\index{UtilisateurDAO@{UtilisateurDAO}!Invalidate2FACode@{Invalidate2FACode}}
+\index{Invalidate2FACode@{Invalidate2FACode}!UtilisateurDAO@{UtilisateurDAO}}
+\doxysubsubsection{Invalidate2FACode()}
+{\footnotesize\ttfamily \label{class_utilisateur_d_a_o_a38b6c212a344ebac8e54df0886637cff} 
+void Utilisateur\+DAO.\+Invalidate2\+FACode (\begin{DoxyParamCaption}\item[{int}]{utilisateur\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Invalide le code de validation à deux facteurs (2FA) pour un utilisateur. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em utilisateur\+Id} & L\textquotesingle{}identifiant de l\textquotesingle{}utilisateur.\\
+\hline
+\end{DoxyParams}
+\index{UtilisateurDAO@{UtilisateurDAO}!SaveCode2FA@{SaveCode2FA}}
+\index{SaveCode2FA@{SaveCode2FA}!UtilisateurDAO@{UtilisateurDAO}}
+\doxysubsubsection{SaveCode2FA()}
+{\footnotesize\ttfamily \label{class_utilisateur_d_a_o_adb3b9eef64d35ab80bd32fc6677e2803} 
+void Utilisateur\+DAO.\+Save\+Code2\+FA (\begin{DoxyParamCaption}\item[{int}]{utilisateur\+Id}{, }\item[{string}]{code}{, }\item[{Date\+Time}]{date}{}\end{DoxyParamCaption})}
+
+
+
+Enregistre un code de validation à deux facteurs (2FA) pour un utilisateur. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em utilisateur\+Id} & L\textquotesingle{}identifiant de l\textquotesingle{}utilisateur.\\
+\hline
+{\em code} & Le code 2FA à enregistrer.\\
+\hline
+{\em date} & La date de génération du code 2FA.\\
+\hline
+\end{DoxyParams}
+\index{UtilisateurDAO@{UtilisateurDAO}!ValidateUserByToken@{ValidateUserByToken}}
+\index{ValidateUserByToken@{ValidateUserByToken}!UtilisateurDAO@{UtilisateurDAO}}
+\doxysubsubsection{ValidateUserByToken()}
+{\footnotesize\ttfamily \label{class_utilisateur_d_a_o_a20013e0c7e30d2dcf98ab4de953f0cd2} 
+bool Utilisateur\+DAO.\+Validate\+User\+By\+Token (\begin{DoxyParamCaption}\item[{string}]{token}{}\end{DoxyParamCaption})}
+
+
+
+Valide un utilisateur en utilisant son token de validation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & Le token de validation de l\textquotesingle{}utilisateur.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Retourne {\ttfamily true} si l\textquotesingle{}utilisateur a été validé avec succès, sinon {\ttfamily false}.
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/ph62ldr/source/repos/\+TPI-\/\+MED/\+TPI-\/\+MED/\+Classes/Utilisateur\+DAO.\+cs\end{DoxyCompactItemize}
